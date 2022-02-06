@@ -8,8 +8,8 @@ import com.example.deviantartviewer.di.component.ApplicationComponent
 import com.example.deviantartviewer.di.component.DaggerApplicationComponent
 import com.example.deviantartviewer.di.module.ApplicationModule
 
-
 import javax.inject.Inject
+
 
 class DeviantArtApp : Application() {
     lateinit var applicationComponent: ApplicationComponent
@@ -33,10 +33,10 @@ class DeviantArtApp : Application() {
 
 
 
-//    // Needed to replace the component with a test specific one
-//    fun setComponent(applicationComponent: ApplicationComponent) {
-//        this.applicationComponent = applicationComponent
-//    }
+    // Needed to replace the component with a test specific one
+    fun setComponent(applicationComponent: ApplicationComponent) {
+        this.applicationComponent = applicationComponent
+    }
 
 //    private fun initTheme() {
 //        ThemeManager.applyTheme(preferences.getString("PREF_THEME_MODE","")!!)

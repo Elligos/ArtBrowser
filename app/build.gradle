@@ -111,6 +111,9 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
     implementation "android.arch.lifecycle:reactivestreams:1.1.1"
 
+    // Logger
+    implementation "com.jakewharton.timber:timber:4.7.1"
+
     // Parser
     implementation "com.google.code.gson:gson:2.8.6"
 

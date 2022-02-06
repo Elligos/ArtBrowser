@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="32dp"
     android:background="#000000"
-    tools:context=".FirstFragment">
+    tools:context=".ui.login.LoginFragment">
 
 
 
@@ -29,13 +29,13 @@
         android:layout_marginBottom="35dp"
         android:contentDescription="@string/deviant_art_logo_description"
         android:src="@drawable/ic_deviantart_logo"
-        app:layout_constraintBottom_toTopOf="@+id/layout_email_sign_up"
+        app:layout_constraintBottom_toTopOf="@+id/layout_email_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_email_sign_up"
+        android:id="@+id/layout_email_login"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,12 +46,12 @@
         app:endIconMode="clear_text"
         app:boxStrokeColor="@color/colorPrimaryDark"
         app:hintEnabled="true"
-        app:layout_constraintBottom_toTopOf="@+id/layout_password_sign_up"
+        app:layout_constraintBottom_toTopOf="@+id/layout_password_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_email_sign_up"
+            android:id="@+id/et_email_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
@@ -62,7 +62,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_password_sign_up"
+        android:id="@+id/layout_password_login"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,12 +72,12 @@
         app:endIconMode="password_toggle"
         app:boxStrokeColor="@color/colorPrimaryDark"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/layout_email_sign_up"
+        app:layout_constraintTop_toBottomOf="@+id/layout_email_login"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_password_sign_up"
+            android:id="@+id/et_password_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"

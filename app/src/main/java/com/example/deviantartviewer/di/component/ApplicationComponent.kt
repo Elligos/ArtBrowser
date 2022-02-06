@@ -11,7 +11,13 @@ import dagger.Component
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Singleton
 import  com.example.deviantartviewer.di.module.ApplicationModule
+import com.example.deviantartviewer.utils.network.NetworkHelper
+import com.example.deviantartviewer.utils.rx.SchedulerProvider
 import dagger.BindsInstance
+
+
+
+
 
 @Singleton
 @Component(modules = [ApplicationModule::class])
@@ -27,11 +33,13 @@ interface ApplicationComponent {
     fun getContext(): Context
 
 
-//    fun getSharedPreferences(): SharedPreferences
-//
-//
-//
-//    fun getCompositeDisposable(): CompositeDisposable
+    fun getSharedPreferences(): SharedPreferences
+
+    fun getSchedulerProvider(): SchedulerProvider
+
+    fun getCompositeDisposable(): CompositeDisposable
+
+    fun getNetworkHelper(): NetworkHelper
 //
 //
 //
