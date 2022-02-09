@@ -19,21 +19,23 @@ object Validator {
 //    (?=.*[a-zA-Z])    # any letter must occur at least once
 //    (?=.*[@#$%^&+=])  # a special character must occur at least once you can replace with your
 //                      # special characters
+//    (?!.*[@#$%^&+=])  # no special allowed in the entire string
 //    (?=\\S+$)         # no whitespace allowed in the entire string
-//    .{4,}             # anything, at least six places though
+//    .{6,}             # anything, at least six places though
 //    $                 # end-of-string
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    const val SPECIAL_CHARACTERS = "-@%\\[\\}+'!/#$^?:;,\\(\"\\)~`.*=&\\{>\\]<_"
-    const val PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[$SPECIAL_CHARACTERS])(?=\\S+$).{6,}$"
-    const val EMAIL_REGEX =  "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+     const val SPECIAL_CHARACTERS = "-@%\\[\\}+'!/#$^?:;,\\(\"\\)~`.*=&\\{>\\]<_"
+     const val PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[$SPECIAL_CHARACTERS])(?=\\S+$).{6,}$"
+     const val EMAIL_REGEX =  "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
             "\\@" +
             "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
             "(" +
             "\\." +
             "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
             ")+"
-
+//    const val USERNAME_REGEX = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{1,20}$"
+const val USERNAME_REGEX = "^(?=.*[a-zA-Z])(?!.*[$SPECIAL_CHARACTERS])(?=\\S+$).{1,20}$"
 
 
     fun isEmailValid(email : String?) : Boolean{
@@ -42,8 +44,12 @@ object Validator {
     }
 
     fun isPasswordValid(password : String?) : Boolean{
-
         if(password.isNullOrBlank()) return false
         return Pattern.compile(PASSWORD_REGEX).matcher(password).matches()
+    }
+
+    fun isUsernameValid(username : String?): Boolean{
+        if(username.isNullOrBlank()) return false
+        return Pattern.compile(USERNAME_REGEX).matcher(username).matches()
     }
 }
