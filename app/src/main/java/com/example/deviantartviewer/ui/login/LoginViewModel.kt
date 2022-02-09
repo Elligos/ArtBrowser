@@ -7,7 +7,6 @@ import com.example.deviantartviewer.data.repository.UserRepository
 import com.example.deviantartviewer.ui.base.BaseViewModel
 import com.example.deviantartviewer.utils.common.Event
 import com.example.deviantartviewer.utils.common.Resource
-import com.example.deviantartviewer.utils.common.Validation
 import com.example.deviantartviewer.utils.common.Validator
 import com.example.deviantartviewer.utils.network.NetworkHelper
 import com.example.deviantartviewer.utils.rx.SchedulerProvider

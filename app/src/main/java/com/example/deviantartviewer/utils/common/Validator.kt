@@ -7,83 +7,43 @@ import java.util.regex.Pattern
 
 object Validator {
 
-    private const val MIN_PASSWORD_LENGTH = 6
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////  Password regex pattern description /////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//    ^                 # start-of-string
+//    (?=.*[0-9])       # a digit must occur at least once
+//    (?=.*[a-z])       # a lower case letter must occur at least once
+//    (?=.*[A-Z])       # an upper case letter must occur at least once
+//    (?=.*[a-zA-Z])    # any letter must occur at least once
+//    (?=.*[@#$%^&+=])  # a special character must occur at least once you can replace with your
+//                      # special characters
+//    (?=\\S+$)         # no whitespace allowed in the entire string
+//    .{4,}             # anything, at least six places though
+//    $                 # end-of-string
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    const val SPECIAL_CHARACTERS = "-@%\\[\\}+'!/#$^?:;,\\(\"\\)~`.*=&\\{>\\]<_"
+    const val PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[$SPECIAL_CHARACTERS])(?=\\S+$).{6,}$"
+    const val EMAIL_REGEX =  "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+            "\\@" +
+            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+            "(" +
+            "\\." +
+            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+            ")+"
+
+
 
     fun isEmailValid(email : String?) : Boolean{
         if(email.isNullOrBlank()) return false
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        return Pattern.compile(EMAIL_REGEX).matcher(email).matches()
     }
 
     fun isPasswordValid(password : String?) : Boolean{
+
         if(password.isNullOrBlank()) return false
-        if(password.length < MIN_PASSWORD_LENGTH) return false
-        return true
-    }
-
-//    private val EMAIL_ADDRESS = Pattern.compile(
-//        "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-//                "\\@" +
-//                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-//                "(" +
-//                "\\." +
-//                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-//                ")+"
-//    )
-//
-
-
-//    fun validateLoginFields(email: String?, password: String?): List<Validation> =
-//        ArrayList<Validation>().apply {
-//            when {
-//                email.isNullOrBlank() ->
-//                    add(Validation(Validation.Field.EMAIL, Resource.error(R.string.email_field_empty)))
-//                !EMAIL_ADDRESS.matcher(email).matches() ->
-//                    add(Validation(Validation.Field.EMAIL, Resource.error(R.string.email_field_invalid)))
-//                else ->
-//                    add(Validation(Validation.Field.EMAIL, Resource.success()))
-//            }
-//            when {
-//                password.isNullOrBlank() ->
-//                    add(Validation(Validation.Field.PASSWORD, Resource.error(R.string.password_field_empty)))
-//                password.length < MIN_PASSWORD_LENGTH ->
-//                    add(Validation(Validation.Field.PASSWORD, Resource.error(R.string.password_field_small_length)))
-//                else -> add(Validation(Validation.Field.PASSWORD, Resource.success()))
-//            }
-//            when {
-//
-//            }
-//        }
-//
-//    fun validateSignupFields(name : String?, email: String?, password: String?): List<Validation> =
-//        ArrayList<Validation>().apply {
-//            when {
-//                email.isNullOrBlank() ->
-//                    add(Validation(Validation.Field.EMAIL, Resource.error(R.string.email_field_empty)))
-//                !EMAIL_ADDRESS.matcher(email).matches() ->
-//                    add(Validation(Validation.Field.EMAIL, Resource.error(R.string.email_field_invalid)))
-//                else ->
-//                    add(Validation(Validation.Field.EMAIL, Resource.success()))
-//            }
-//            when {
-//                password.isNullOrBlank() ->
-//                    add(Validation(Validation.Field.PASSWORD, Resource.error(R.string.password_field_empty)))
-//                password.length < MIN_PASSWORD_LENGTH ->
-//                    add(Validation(Validation.Field.PASSWORD, Resource.error(R.string.password_field_small_length)))
-//                else -> add(Validation(Validation.Field.PASSWORD, Resource.success()))
-//            }
-//            when {
-//                name.isNullOrBlank() ->
-//                    add(Validation(Validation.Field.TEXTFIELD, Resource.error(R.string.name_field_empty)))
-//                else -> add(Validation(Validation.Field.TEXTFIELD, Resource.success()))
-//            }
-//        }
-}
-
-data class Validation(val field: Field, val resource: Resource<Int>) {
-
-    enum class Field {
-        EMAIL,
-        PASSWORD,
-        TEXTFIELD
+        return Pattern.compile(PASSWORD_REGEX).matcher(password).matches()
     }
 }
