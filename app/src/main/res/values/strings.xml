@@ -21,4 +21,13 @@
     <string name="password_field_hint">Password</string>
     <string name="birthdate_field_hint">Date of Birth</string>
     <string name="registration_text_field">Joint Deviant Art</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Profile -->
+    <string name="user_pofile_image_description">User pofile image</string>
+    <string name="profile_username_text_field">Username</string>
+    <string name="profile_country_text_field">Country</string>
+    <string name="birhday_icon_description">Birhday icon</string>
+    <string name="profile_birthday_text_string">Birthday</string>
 </resources>

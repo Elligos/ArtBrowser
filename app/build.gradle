@@ -84,6 +84,7 @@ dependencies {
 
     // Dagger
     implementation "com.google.dagger:dagger:2.29.1"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     kapt "com.google.dagger:dagger-compiler:2.29.1"
 
     // Database
