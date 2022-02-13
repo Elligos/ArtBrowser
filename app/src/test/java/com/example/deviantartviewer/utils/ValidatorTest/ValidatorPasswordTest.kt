@@ -21,6 +21,7 @@ class ValidatorPasswordTest( private val password : String?,
                     arrayOf("Strong_Password#7", true),
                     arrayOf("Strong_Password7-@%[}+'!/#?:;,()~`.*=&{>]<_", true),
                     arrayOf("StrongPassword7[", true),
+                    arrayOf("strongpassword7", true),
 
 
 

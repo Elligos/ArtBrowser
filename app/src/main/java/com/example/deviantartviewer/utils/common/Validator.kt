@@ -26,7 +26,7 @@ object Validator {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
      const val SPECIAL_CHARACTERS = "-@%\\[\\}+'!/#$^?:;,\\(\"\\)~`.*=&\\{>\\]<_"
-     const val PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[$SPECIAL_CHARACTERS])(?=\\S+$).{6,}$"
+     const val PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{6,}$"
      const val EMAIL_REGEX =  "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
             "\\@" +
             "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
@@ -34,8 +34,7 @@ object Validator {
             "\\." +
             "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
             ")+"
-//    const val USERNAME_REGEX = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{1,20}$"
-const val USERNAME_REGEX = "^(?=.*[a-zA-Z])(?!.*[$SPECIAL_CHARACTERS])(?=\\S+$).{1,20}$"
+    const val USERNAME_REGEX = "^(?=.*[a-zA-Z])(?!.*[$SPECIAL_CHARACTERS])(?=\\S+$).{1,20}$"
 
 
     fun isEmailValid(email : String?) : Boolean{
