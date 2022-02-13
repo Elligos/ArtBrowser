@@ -54,8 +54,9 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
 
         binding.buttonLogin.setOnClickListener{
             viewModel.doLogin()
-            showMessage("Login with email: ${viewModel.emailField.value} " +
-                                "and pswd: ${viewModel.passwordField.value} !")
+//            showMessage("Login with email: ${viewModel.emailField.value} " +
+//                                "and pswd: ${viewModel.passwordField.value} !")
+            findNavController().navigate(R.id.action_LoginFragment_to_profileFragment)
 
         }
 
