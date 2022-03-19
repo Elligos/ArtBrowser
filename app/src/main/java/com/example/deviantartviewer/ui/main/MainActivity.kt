@@ -1,14 +1,21 @@
 package com.example.deviantartviewer.ui.main
 
+import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.example.deviantartviewer.R
+import com.example.deviantartviewer.utils.log.Logger
+import com.jakewharton.retrofit2.adapter.rxjava2.Result.response
+import net.openid.appauth.*
+
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        private const val TAG = "MainActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,4 +39,55 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+
+//        val data = getIntent().data
+//        if(data != null){
+//            val code = data.getQueryParameter("code")
+//            Toast.makeText(this, "$code", Toast.LENGTH_LONG).show()
+//        }
+
+    }
+
+//    var authState : AuthState? = null
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if(data == null) {
+//            Logger.d(TAG, "onActivityResult data is null!")
+//            return
+//        }
+//
+//
+//        if (requestCode == 19777) {
+//            val resp = AuthorizationResponse.fromIntent(data)
+//            val ex = AuthorizationException.fromIntent(data)
+//
+//            Logger.d(TAG, "Response: $resp ")
+//            Logger.d(TAG, "Exception: $ex ")
+//        } else {
+//            val resp = AuthorizationResponse.fromIntent(data)
+//            val ex = AuthorizationException.fromIntent(data)
+//            Logger.d(TAG, "Request code : $requestCode  invalid!")
+//            Logger.d(TAG, "Response: $resp ")
+//            Logger.d(TAG, "Authorization code: ${resp?.authorizationCode} ")
+//            Logger.d(TAG, "Exception: $ex ")
+//            authState = AuthState(resp, ex)
+//
+//        }
+    }
+
+//    private fun retrieveTokens(authResponse: AuthorizationResponse) {
+//        val tokenRequest: TokenRequest = authResponse.createTokenExchangeRequest()
+//        val service = AuthorizationService(this)
+//        service.performTokenRequest(tokenRequest, mClientAuthentication
+//        ) { tokenResponse, tokenException ->
+//            mAuthState.update(tokenResponse, tokenException)
+//
+//            // Handle token response error here
+//            persistAuthState(mAuthState)
+//        }
+//    }
 }

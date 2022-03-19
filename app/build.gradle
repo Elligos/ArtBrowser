@@ -136,6 +136,9 @@ dependencies {
     kaptAndroidTest "com.google.dagger:dagger-compiler:2.29.1"
     debugImplementation "androidx.fragment:fragment-testing:1.4.1"
 
+    // The AppAuth library manages OAuth security
+    implementation("net.openid:appauth:0.11.1")
+
 
     //Permissions
     implementation "pub.devrel:easypermissions:3.0.0"
