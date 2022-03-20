@@ -1,8 +1,10 @@
 package com.example.deviantartviewer.ui.login
 
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.example.deviantartviewer.data.authorization.AuthManager
 import com.example.deviantartviewer.data.repository.UserRepository
 import com.example.deviantartviewer.ui.base.BaseViewModel
 import com.example.deviantartviewer.utils.common.Event
@@ -15,9 +17,10 @@ import io.reactivex.disposables.CompositeDisposable
 class LoginViewModel(
     schedulerProvider: SchedulerProvider,
     compositeDisposable: CompositeDisposable,
-    networkHelper: NetworkHelper
+    networkHelper: NetworkHelper,
+    authManager: AuthManager
 ) : BaseViewModel(
-    schedulerProvider, compositeDisposable, networkHelper
+    schedulerProvider, compositeDisposable, networkHelper, authManager
 ){
 
     override fun onCreate() {}
@@ -30,8 +33,13 @@ class LoginViewModel(
 
     fun onPasswordChange(password : String) = passwordField.postValue(password)
 
-    fun doLogin(){
+    fun getAuthIntent() : Intent{
+        return authManager.getAuthorizationRequestIntent()
+    }
 
+    fun requestTokenWithData(data : Intent){
+        authManager.handleAuthorizationResponse(data)
+        authManager.requestToken()
     }
 
 }

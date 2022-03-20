@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.room.Room
 import com.bumptech.glide.util.ViewPreloadSizeProvider
 import com.example.deviantartviewer.DeviantArtApp
+import com.example.deviantartviewer.data.authorization.AuthManager
 import com.example.deviantartviewer.di.ApplicationContext
 import com.example.deviantartviewer.utils.network.NetworkHelper
 import com.example.deviantartviewer.utils.rx.RxSchedulerProvider
@@ -45,5 +46,9 @@ class ApplicationModule(private val application: DeviantArtApp) {
     @Singleton
     @Provides
     fun provideNetworkHelper(): NetworkHelper = NetworkHelper(application)
+
+    @Singleton
+    @Provides
+    fun provideAuthManager(): AuthManager = AuthManager(application)
 
 }

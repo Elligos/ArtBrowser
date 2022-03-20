@@ -1,6 +1,7 @@
 package com.example.deviantartviewer.di.module
 
 import androidx.lifecycle.ViewModelProvider
+import com.example.deviantartviewer.data.authorization.AuthManager
 import com.example.deviantartviewer.data.repository.UserRepository
 import com.example.deviantartviewer.ui.base.BaseFragment
 import com.example.deviantartviewer.ui.login.LoginViewModel
@@ -21,11 +22,12 @@ class FragmentModule(private val fragment: BaseFragment<*>) {
     fun provideLoginViewModel(
         schedulerProvider: SchedulerProvider,
         compositeDisposable: CompositeDisposable,
-        networkHelper: NetworkHelper//,
+        networkHelper: NetworkHelper,
+        authManager: AuthManager//,
         //userRepository: UserRepository
     ): LoginViewModel = ViewModelProvider(
         fragment, ViewModelProviderFactory(LoginViewModel::class) {
-            LoginViewModel(schedulerProvider, compositeDisposable, networkHelper/*, userRepository*/)
+            LoginViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager/*, userRepository*/)
         }).get(LoginViewModel::class.java)
 
 
@@ -33,22 +35,24 @@ class FragmentModule(private val fragment: BaseFragment<*>) {
     fun provideSignupViewModel(
         schedulerProvider: SchedulerProvider,
         compositeDisposable: CompositeDisposable,
-        networkHelper: NetworkHelper//,
+        networkHelper: NetworkHelper,
+        authManager: AuthManager//,
         //userRepository: UserRepository
     ): SignupViewModel = ViewModelProvider(
         fragment, ViewModelProviderFactory(SignupViewModel::class) {
-            SignupViewModel(schedulerProvider, compositeDisposable, networkHelper/*, userRepository*/)
+            SignupViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager/*, userRepository*/)
         }).get(SignupViewModel::class.java)
 
     @Provides
     fun provideProfileViewModel(
             schedulerProvider: SchedulerProvider,
             compositeDisposable: CompositeDisposable,
-            networkHelper: NetworkHelper//,
+            networkHelper: NetworkHelper,
+            authManager: AuthManager//,
             //userRepository: UserRepository
     ): ProfileViewModel = ViewModelProvider(
             fragment, ViewModelProviderFactory(ProfileViewModel::class) {
-        ProfileViewModel(schedulerProvider, compositeDisposable, networkHelper/*, userRepository*/)
+        ProfileViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager/*, userRepository*/)
     }).get(ProfileViewModel::class.java)
 
 }
