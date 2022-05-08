@@ -25,9 +25,25 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Profile -->
-    <string name="user_pofile_image_description">User pofile image</string>
+    <string name="user_profile_image_description">User profile image</string>
     <string name="profile_username_text_field">Username</string>
     <string name="profile_country_text_field">Country</string>
-    <string name="birhday_icon_description">Birhday icon</string>
+    <string name="birthday_icon_description">Birthday icon</string>
     <string name="profile_birthday_text_string">Birthday</string>
+
+    <string name="all_time_stats_text_field">All Time Stats</string>
+    <string name="comments_made_text_field">Comments Made</string>
+    <string name="watching_you_text_field">Watching You</string>
+    <string name="comments_received_text_field">Comments\n Received</string>
+    <string name="comments_received_counter_default_text_field">0</string>
+    <string name="profile_views_text_field">Profile Views</string>
+    <string name="favorites_counter_default_text_view">0</string>
+    <string name="favorites_text_field">Favorites</string>
+    <string name="comments_made_counter_default_text_field">0</string>
+    <string name="you_watching_counter_default_text_field">0</string>
+    <string name="watching_you_counter_default_text_field">0</string>
+    <string name="profile_views_counter_default_text_field">0</string>
+    <string name="you_watching_text_field">You Watching</string>
+    <string name="logout_icon_content_description">Logout icon</string>
+
 </resources>

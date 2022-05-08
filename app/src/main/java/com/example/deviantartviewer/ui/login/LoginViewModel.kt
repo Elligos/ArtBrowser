@@ -27,6 +27,7 @@ class LoginViewModel(
 
     val emailField : MutableLiveData<String> = MutableLiveData()
     val passwordField : MutableLiveData<String> = MutableLiveData()
+    val launchMain: MutableLiveData<Event<Map<String, String>>> = MutableLiveData()
 
 
     fun onEmailChange(email : String) = emailField.postValue(email)
@@ -40,6 +41,12 @@ class LoginViewModel(
     fun requestTokenWithData(data : Intent){
         authManager.handleAuthorizationResponse(data)
         authManager.requestToken()
+        compositeDisposable.add(
+            authManager.authCompleteSubject.subscribe {authorized ->
+                if (authorized == true) launchMain.postValue(Event(emptyMap()))
+            }
+        )
     }
+
 
 }

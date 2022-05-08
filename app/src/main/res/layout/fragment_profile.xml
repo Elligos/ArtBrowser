@@ -1,25 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="32dp"
-    android:background="#000000">
+    android:background="#000000"
+    android:padding="32dp">
 
+
+    <TextView
+        android:id="@+id/tvCommentsMade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/comments_made_text_field"
+        android:textAlignment="center"
+        android:textColor="@color/devArtGrey"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.794"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/tvCommentsMadeCounter" />
+
+    <TextView
+        android:id="@+id/tvWathingYou"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/watching_you_text_field"
+        android:textAlignment="center"
+        android:textColor="@color/devArtGrey"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/tvWatchingYouCounter" />
+
+    <TextView
+        android:id="@+id/tvCommentsReceived"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="false"
+        android:text="@string/comments_received_text_field"
+        android:textAlignment="center"
+        android:textColor="@color/devArtGrey"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/tvCommentsReceivedCounter" />
+
+    <TextView
+        android:id="@+id/tvCommentsReceivedCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="87dp"
+        android:text="@string/comments_received_counter_default_text_field"
+        android:textColor="@color/devArtWhite"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/tvAllTimeStats" />
+
+    <TextView
+        android:id="@+id/tvProfileViews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_views_text_field"
+        android:textAlignment="center"
+        android:textColor="@color/devArtGrey"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileViewsCounter" />
+
+    <TextView
+        android:id="@+id/tvFavoritesCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="87dp"
+        android:text="@string/favorites_counter_default_text_view"
+        android:textColor="@color/devArtWhite"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/tvAllTimeStats" />
+
+    <TextView
+        android:id="@+id/tvFavorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/favorites_text_field"
+        android:textAlignment="center"
+        android:textColor="@color/devArtGrey"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/tvFavoritesCounter" />
+
+    <TextView
+        android:id="@+id/tvCommentsMadeCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="87dp"
+        android:text="@string/comments_made_counter_default_text_field"
+        android:textColor="@color/devArtWhite"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/tvAllTimeStats" />
+
+    <TextView
+        android:id="@+id/tvYouWatchingCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/you_watching_counter_default_text_field"
+        android:textColor="@color/devArtWhite"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/tvAllTimeStats" />
+
+    <TextView
+        android:id="@+id/tvWatchingYouCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/watching_you_counter_default_text_field"
+        android:textColor="@color/devArtWhite"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/tvAllTimeStats" />
+
+    <TextView
+        android:id="@+id/tvProfileViewsCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/profile_views_counter_default_text_field"
+        android:textColor="@color/devArtWhite"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/tvAllTimeStats" />
+
+    <TextView
+        android:id="@+id/tvYouWatching"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/you_watching_text_field"
+        android:textAlignment="center"
+        android:textColor="@color/devArtGrey"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/tvYouWatchingCounter" />
 
     <ImageView
         android:id="@+id/ivUserImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginBottom="20dp"
+        android:contentDescription="@string/user_profile_image_description"
+        app:layout_constraintBottom_toTopOf="@+id/tvUsernameProfile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/tvUsernameProfile"
-        tools:src="@tools:sample/avatars"
-        android:contentDescription="@string/user_pofile_image_description" />
+        tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvUsernameProfile"
@@ -39,11 +188,8 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
         android:contentDescription="@string/deviant_art_logo_description"
         android:src="@drawable/ic_baseline_fmd_good_24_grey"
-        app:layout_constraintEnd_toStartOf="@+id/tvProfileCountry"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvUsernameProfile" />
 
@@ -51,34 +197,75 @@
         android:id="@+id/tvProfileCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="88dp"
         android:text="@string/profile_country_text_field"
         android:textColor="@color/devArtWhite"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/ivBirthdayIcon"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsernameProfile" />
+        app:layout_constraintBottom_toBottomOf="@+id/ivCountryIcon"
+        app:layout_constraintStart_toEndOf="@+id/ivCountryIcon"
+        app:layout_constraintTop_toTopOf="@+id/ivCountryIcon" />
 
     <ImageView
         android:id="@+id/ivBirthdayIcon"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/birthday_icon_description"
         android:src="@drawable/ic_baseline_cake_24"
         app:layout_constraintEnd_toStartOf="@+id/tvProfileBirthday"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsernameProfile"
-        android:contentDescription="@string/birhday_icon_description" />
+        app:layout_constraintTop_toBottomOf="@+id/tvUsernameProfile" />
 
     <TextView
         android:id="@+id/tvProfileBirthday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="4dp"
         android:text="@string/profile_birthday_text_string"
         android:textColor="@color/devArtWhite"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivBirthdayIcon"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/ivBirthdayIcon" />
+
+    <TextView
+        android:id="@+id/tvAllTimeStats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/all_time_stats_text_field"
+        android:textColor="@color/devArtGrey"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsernameProfile" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivCountryIcon" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.14" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.86" />
+
+    <ImageView
+        android:id="@+id/ivLogoutIcon"
+        android:layout_width="60dp"
+        android:layout_height="62dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivUserImage"
+        app:layout_constraintStart_toEndOf="@+id/ivUserImage"
+        app:srcCompat="@drawable/ic_baseline_logout_40"
+        android:contentDescription="@string/logout_icon_content_description" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

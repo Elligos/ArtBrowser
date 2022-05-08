@@ -69,6 +69,15 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
 
     }
 
+    override fun setupObservers(){
+        super.setupObservers()
+        viewModel.launchMain.observe(this, {
+            it.getIfNotHandled()?.run {
+                findNavController().navigate(R.id.action_LoginFragment_to_profileFragment)
+            }
+        })
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

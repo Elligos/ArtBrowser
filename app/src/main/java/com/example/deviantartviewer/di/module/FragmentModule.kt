@@ -48,11 +48,11 @@ class FragmentModule(private val fragment: BaseFragment<*>) {
             schedulerProvider: SchedulerProvider,
             compositeDisposable: CompositeDisposable,
             networkHelper: NetworkHelper,
-            authManager: AuthManager//,
-            //userRepository: UserRepository
+            authManager: AuthManager,
+            userRepository: UserRepository
     ): ProfileViewModel = ViewModelProvider(
             fragment, ViewModelProviderFactory(ProfileViewModel::class) {
-        ProfileViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager/*, userRepository*/)
+        ProfileViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager, userRepository)
     }).get(ProfileViewModel::class.java)
 
 }
