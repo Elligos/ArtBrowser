@@ -23,11 +23,10 @@ class FragmentModule(private val fragment: BaseFragment<*>) {
         schedulerProvider: SchedulerProvider,
         compositeDisposable: CompositeDisposable,
         networkHelper: NetworkHelper,
-        authManager: AuthManager//,
-        //userRepository: UserRepository
+        authManager: AuthManager
     ): LoginViewModel = ViewModelProvider(
         fragment, ViewModelProviderFactory(LoginViewModel::class) {
-            LoginViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager/*, userRepository*/)
+            LoginViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager)
         }).get(LoginViewModel::class.java)
 
 
@@ -36,11 +35,10 @@ class FragmentModule(private val fragment: BaseFragment<*>) {
         schedulerProvider: SchedulerProvider,
         compositeDisposable: CompositeDisposable,
         networkHelper: NetworkHelper,
-        authManager: AuthManager//,
-        //userRepository: UserRepository
+        authManager: AuthManager
     ): SignupViewModel = ViewModelProvider(
         fragment, ViewModelProviderFactory(SignupViewModel::class) {
-            SignupViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager/*, userRepository*/)
+            SignupViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager)
         }).get(SignupViewModel::class.java)
 
     @Provides

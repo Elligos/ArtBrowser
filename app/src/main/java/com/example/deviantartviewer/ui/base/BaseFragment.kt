@@ -49,7 +49,6 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
         setupView(view)
     }
 
-//    fun showMessage(message: String) = context?.let { Toaster.show(it, message) }
     fun showMessage(message: String)
     {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()

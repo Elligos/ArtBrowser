@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.UserManager
 import androidx.lifecycle.MutableLiveData
 import com.example.deviantartviewer.data.authorization.AuthManager
+import com.example.deviantartviewer.data.remote.response.ProfileResponse
 import com.example.deviantartviewer.data.repository.UserRepository
 import com.example.deviantartviewer.ui.base.BaseViewModel
 import com.example.deviantartviewer.ui.login.LoginFragment
@@ -46,18 +47,6 @@ class ProfileViewModel(
     override fun onCreate() {
         Logger.d(TAG, "ProfileViewModel created")
         Logger.d(TAG, "Auth token: ${authManager.getCurrentToken()}")
-//        compositeDisposable.add(
-//            userRepository.doWhoAmICall()
-//                .subscribeOn(schedulerProvider.io())
-//                .subscribe(
-//                        {
-//                            Logger.d(TAG, "WhoAmI request result: $it")
-//                        },
-//                        {
-//                            Logger.d(TAG, "WhoAmI request failed with exception: $it")
-//                        }
-//                )
-//        )
 
         compositeDisposable.add(
                 userRepository.doUserProfileFetch()
@@ -65,16 +54,7 @@ class ProfileViewModel(
                         .subscribe(
                                 {
                                     Logger.d(TAG, "Profile request result: $it")
-                                    imageUrl.postValue(it.user?.usericon)
-                                    username.postValue(it.user?.username)
-                                    birthday.postValue("${it.user?.details?.age} years")
-                                    country.postValue(it.user?.geo?.country)
-                                    profileViews.postValue("${it.stats?.profilePageviews}")
-                                    favorites.postValue("${it.stats?.userFavourites}")
-                                    commentsMade.postValue("${it.stats?.userComments}")
-                                    commentsReceived.postValue("${it.stats?.profileComments}")
-                                    watchingYou.postValue("${it.user?.userStats?.watchers}")
-                                    youWatching.postValue("${it.user?.userStats?.friends}")
+                                    updateProfileWithResponseData(it)
                                 },
                                 {
                                     Logger.d(TAG, "Profile request failed with exception: $it")
@@ -90,22 +70,22 @@ class ProfileViewModel(
 
     }
 
-    fun getLogoutIntent() : Intent = authManager.getLogoutRequestIntent()
+    fun updateProfileWithResponseData(data : ProfileResponse){
+        imageUrl.postValue(data.user?.usericon)
+        username.postValue(data.user?.username)
+        birthday.postValue("${data.user?.details?.age} years")
+        country.postValue(data.user?.geo?.country)
+        profileViews.postValue("${data.stats?.profilePageviews}")
+        favorites.postValue("${data.stats?.userFavourites}")
+        commentsMade.postValue("${data.stats?.userComments}")
+        commentsReceived.postValue("${data.stats?.profileComments}")
+        watchingYou.postValue("${data.user?.userStats?.watchers}")
+        youWatching.postValue("${data.user?.userStats?.friends}")
+    }
+
 
     fun logout(){
-
-        compositeDisposable.add(
-                userRepository.logoutCall()
-                        .subscribeOn(schedulerProvider.io())
-                        .subscribe(                                {
-                            Logger.d(TAG, "Logout call result: $it")
-                            authManager.authCompleteSubject.onNext(false)
-                        },
-                        {
-                            Logger.d(TAG, "Logout call failed with exception: $it")
-                        })
-        )
-        //authManager.authCompleteSubject.onNext(false)
+        authManager.authCompleteSubject.onNext(false)
     }
 
 

@@ -21,7 +21,6 @@ class ProfileFragment : BaseFragment<ProfileViewModel>() {
 
     companion object {
         private const val TAG = "ProfileFragment"
-        private const val LOGOUT_REQUEST_CODE = 98232
     }
 
     //View Binding
@@ -38,7 +37,6 @@ class ProfileFragment : BaseFragment<ProfileViewModel>() {
         _binding = FragmentProfileBinding.bind(view)
 
         binding.ivLogoutIcon.setOnClickListener{
-//            startActivityForResult(viewModel.getLogoutIntent(), LOGOUT_REQUEST_CODE)
             viewModel.logout()
         }
     }
@@ -101,18 +99,4 @@ class ProfileFragment : BaseFragment<ProfileViewModel>() {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(data == null) {
-            Logger.d(TAG, "onActivityResult data is null!")
-            return
-        }
-        Logger.d(TAG, "Request code : $requestCode ")
-        if (requestCode == LOGOUT_REQUEST_CODE){
-            Logger.d(TAG, "Logout response")
-            viewModel.logout()
-        }
-
-    }
 }

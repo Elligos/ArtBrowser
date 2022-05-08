@@ -57,7 +57,7 @@ class ApplicationModule(private val application: DeviantArtApp) {
     @Singleton
     fun provideNetworkService(): NetworkService =
             Networking.create(
-                    "20472a4501820a07035555938d28d607",
+                    //"20472a4501820a07035555938d28d607",
                     "https://www.deviantart.com/api/v1/oauth2/",
                     application.cacheDir,
                     10 * 1024 * 1024 // 10MB
