@@ -45,5 +45,8 @@
     <string name="profile_views_counter_default_text_field">0</string>
     <string name="you_watching_text_field">You Watching</string>
     <string name="logout_icon_content_description">Logout icon</string>
+    <string name="bottom_menu_browse_string">Browse</string>
+    <string name="bottom_menu_favorites_string">Favorites</string>
+    <string name="bottom_menu_profile_string">Profile</string>
 
 </resources>

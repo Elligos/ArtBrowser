@@ -31,9 +31,20 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.deviantartviewer.ui.profile.ProfileFragment"
-        android:label="ProfileFragment" >
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_LoginFragment"
             app:destination="@id/LoginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/FavoritesFragment"
+        android:name="com.example.deviantartviewer.ui.favorites.FavoritesFragment"
+        android:label="FavoritesFragment"
+        tools:layout="@layout/fragment_favorites"/>
+    <fragment
+        android:id="@+id/BrowseFragment"
+        android:name="com.example.deviantartviewer.ui.browse.BrowseFragment"
+        android:label="BrowseFragment"
+        tools:layout="@layout/fragment_browse"/>
 </navigation>
