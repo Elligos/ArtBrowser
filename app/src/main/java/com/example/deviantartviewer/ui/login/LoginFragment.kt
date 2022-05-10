@@ -35,27 +35,27 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
     override fun setupView(view: View) {
         _binding = FragmentLoginBinding.bind(view)
 
-        binding.etEmailLogin.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.onEmailChange(s.toString())
-            }
-
-        })
-
-
-        binding.etPasswordLogin.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.onPasswordChange(s.toString())
-            }
-        })
+//        binding.etEmailLogin.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(s: Editable?) {}
+//
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                viewModel.onEmailChange(s.toString())
+//            }
+//
+//        })
+//
+//
+//        binding.etPasswordLogin.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(s: Editable?) {}
+//
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                viewModel.onPasswordChange(s.toString())
+//            }
+//        })
 
 
         binding.buttonLogin.setOnClickListener{
@@ -63,9 +63,9 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
         }
 
 
-        binding.textviewSignupMessage.setOnClickListener{
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
+//        binding.textviewSignupMessage.setOnClickListener{
+//            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+//        }
 
     }
 

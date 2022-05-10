@@ -8,7 +8,6 @@ import com.example.deviantartviewer.ui.browse.BrowseViewModel
 import com.example.deviantartviewer.ui.favorites.FavoritesViewModel
 import com.example.deviantartviewer.ui.login.LoginViewModel
 import com.example.deviantartviewer.ui.profile.ProfileViewModel
-import com.example.deviantartviewer.ui.signup.SignupViewModel
 import com.example.deviantartviewer.utils.ViewModelProviderFactory
 import com.example.deviantartviewer.utils.network.NetworkHelper
 import com.example.deviantartviewer.utils.rx.SchedulerProvider
@@ -32,16 +31,6 @@ class FragmentModule(private val fragment: BaseFragment<*>) {
         }).get(LoginViewModel::class.java)
 
 
-    @Provides
-    fun provideSignupViewModel(
-        schedulerProvider: SchedulerProvider,
-        compositeDisposable: CompositeDisposable,
-        networkHelper: NetworkHelper,
-        authManager: AuthManager
-    ): SignupViewModel = ViewModelProvider(
-        fragment, ViewModelProviderFactory(SignupViewModel::class) {
-            SignupViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager)
-        }).get(SignupViewModel::class.java)
 
     @Provides
     fun provideProfileViewModel(

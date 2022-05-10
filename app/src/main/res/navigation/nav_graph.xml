@@ -12,21 +12,8 @@
         tools:layout="@layout/fragment_login">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SignupFragment" />
-        <action
             android:id="@+id/action_LoginFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/SignupFragment"
-        android:name="com.example.deviantartviewer.ui.signup.SignupFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_sign_up">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/LoginFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
