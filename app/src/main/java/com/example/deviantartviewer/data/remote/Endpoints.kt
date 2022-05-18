@@ -10,4 +10,6 @@ object Endpoints {
     const val PROFILE = "user/profile/{username}"
     const val WATCHERS = "user/watchers/{username}"
 
+    const val NEWEST = "browse/newest"
+
 }

@@ -2,9 +2,11 @@ package com.example.deviantartviewer.di.module
 
 import androidx.lifecycle.ViewModelProvider
 import com.example.deviantartviewer.data.authorization.AuthManager
+import com.example.deviantartviewer.data.repository.ImageRepository
 import com.example.deviantartviewer.data.repository.UserRepository
 import com.example.deviantartviewer.ui.base.BaseFragment
 import com.example.deviantartviewer.ui.browse.BrowseViewModel
+import com.example.deviantartviewer.ui.browse.images.ImageAdapter
 import com.example.deviantartviewer.ui.favorites.FavoritesViewModel
 import com.example.deviantartviewer.ui.login.LoginViewModel
 import com.example.deviantartviewer.ui.profile.ProfileViewModel
@@ -60,10 +62,14 @@ class FragmentModule(private val fragment: BaseFragment<*>) {
             schedulerProvider: SchedulerProvider,
             compositeDisposable: CompositeDisposable,
             networkHelper: NetworkHelper,
-            authManager: AuthManager
+            authManager: AuthManager,
+            imageRepository : ImageRepository
     ): BrowseViewModel = ViewModelProvider(
             fragment, ViewModelProviderFactory(BrowseViewModel::class) {
-        BrowseViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager)
+        BrowseViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager, imageRepository)
     }).get(BrowseViewModel::class.java)
+
+//    @Provides
+//    fun provideImageAdapter() = ImageAdapter(ArrayList(), viewModel: BrowseViewModel)
 
 }

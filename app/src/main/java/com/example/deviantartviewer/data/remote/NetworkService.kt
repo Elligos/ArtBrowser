@@ -1,6 +1,7 @@
 package com.example.deviantartviewer.data.remote
 
 import com.example.deviantartviewer.data.remote.request.LogoutRequest
+import com.example.deviantartviewer.data.remote.response.ImageResponse
 import com.example.deviantartviewer.data.remote.response.ProfileResponse
 import com.example.deviantartviewer.data.remote.response.WhoamiResponse
 import io.reactivex.Single
@@ -25,6 +26,15 @@ interface NetworkService {
             @Query("with_session") with_session: Boolean?,
             @Query("expand") expand: String
     ): Single<ProfileResponse>
+
+    @GET(Endpoints.NEWEST)
+    fun doNewestFetchCall(
+            @Header("Authorization") token: String,
+            @Query("q") query: String?,
+            @Query("offset") offset: Int?,
+            @Query("limit") limit: Int?,
+            @Query("mature_content") mature_content: Boolean?
+    ): Single<ImageResponse>
 
     @POST(Endpoints.LOGOUT)
     fun doLogoutCall(
