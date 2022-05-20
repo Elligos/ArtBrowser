@@ -12,4 +12,6 @@ object Endpoints {
 
     const val NEWEST = "browse/newest"
 
+    const val COLLECTIONS_ALL = "collections/all"
+
 }

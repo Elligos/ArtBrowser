@@ -71,7 +71,10 @@ class ProfileViewModel(
     }
 
     fun updateProfileWithResponseData(data : ProfileResponse){
-        imageUrl.postValue(data.user?.usericon)
+
+        val bigAvatarUrl = convertToBigAvatarUrl(data.user?.usericon?:"")
+
+        imageUrl.postValue(bigAvatarUrl)
         username.postValue(data.user?.username)
         birthday.postValue("${data.user?.details?.age} years")
         country.postValue(data.user?.geo?.country)
@@ -81,6 +84,11 @@ class ProfileViewModel(
         commentsReceived.postValue("${data.stats?.profileComments}")
         watchingYou.postValue("${data.user?.userStats?.watchers}")
         youWatching.postValue("${data.user?.userStats?.friends}")
+    }
+
+    fun convertToBigAvatarUrl(avatarUrl : String) : String{
+        return avatarUrl.replace("https://a.deviantart.net/avatars",
+                                "https://a.deviantart.net/avatars-big")
     }
 
 

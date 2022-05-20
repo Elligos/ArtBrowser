@@ -51,10 +51,11 @@ class FragmentModule(private val fragment: BaseFragment<*>) {
             schedulerProvider: SchedulerProvider,
             compositeDisposable: CompositeDisposable,
             networkHelper: NetworkHelper,
-            authManager: AuthManager
+            authManager: AuthManager,
+            imageRepository : ImageRepository
     ): FavoritesViewModel = ViewModelProvider(
             fragment, ViewModelProviderFactory(FavoritesViewModel::class) {
-        FavoritesViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager)
+        FavoritesViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager, imageRepository)
     }).get(FavoritesViewModel::class.java)
 
     @Provides

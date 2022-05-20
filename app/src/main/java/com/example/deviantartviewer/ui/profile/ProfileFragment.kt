@@ -44,6 +44,9 @@ class ProfileFragment : BaseFragment<ProfileViewModel>() {
     override fun setupObservers(){
         super.setupObservers()
 
+        //TODO: load big-icon instead usual
+        //url example for big icon: https://a.deviantart.net/avatars-big/d/m/dmitriydev.jpg?10
+        //url example for usual icon: https://a.deviantart.net/avatars/d/m/dmitriydev.jpg?10
         viewModel.imageUrl.observe(this, {
             it?.run {
                 val glideRequest = Glide

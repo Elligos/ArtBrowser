@@ -36,6 +36,13 @@ interface NetworkService {
             @Query("mature_content") mature_content: Boolean?
     ): Single<ImageResponse>
 
+    @GET(Endpoints.COLLECTIONS_ALL)
+    fun doCollectionsAllFetchCall(
+            @Header("Authorization") token: String,
+            @Query("offset") offset: Int?,
+            @Query("limit") limit: Int?,
+    ) : Single<ImageResponse>
+
     @POST(Endpoints.LOGOUT)
     fun doLogoutCall(
 //            @Header("Authorization") authToken: String,

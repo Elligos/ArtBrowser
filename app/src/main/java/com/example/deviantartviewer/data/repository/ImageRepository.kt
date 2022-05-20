@@ -22,4 +22,9 @@ class ImageRepository @Inject constructor(private val networkService: NetworkSer
                                             14,
                                             true)
 
+    fun doCollectionsAllFetch() : Single<ImageResponse> =
+            networkService.doCollectionsAllFetchCall("Bearer "+authManager.getCurrentToken(),
+                                                    0,
+                                                    14)
+
 }
