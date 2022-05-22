@@ -31,23 +31,9 @@ abstract class BaseItemViewHolder<T : Any, VM: BaseViewModel>( @LayoutRes layout
     }
 
 
-
-//    private fun buildViewHolderComponent() =
-//            DaggerViewHolderComponent
-//                    .builder()
-//                    .applicationComponent((itemView.context.applicationContext as DeviantArtApp).applicationComponent)
-//                    .viewHolderModule(ViewHolderModule(this))
-//                    .build()
-
-    //fun showMessage(message: String) = Toaster.show(itemView.context, message)
-
-    //fun showMessage(@StringRes resId: Int) = showMessage(itemView.context.getString(resId))
-
     protected open fun setupObservers() {
-
     }
 
-    //protected abstract fun injectDependencies(viewHolderComponent: ViewHolderComponent)
 
     abstract fun setupView(view: View)
 

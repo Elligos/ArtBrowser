@@ -11,6 +11,7 @@ import com.example.deviantartviewer.ui.base.BaseFragment
 import com.example.deviantartviewer.ui.browse.BrowseFragment
 import com.example.deviantartviewer.ui.browse.BrowseViewModel
 import com.example.deviantartviewer.ui.browse.images.ImageAdapter
+import com.example.deviantartviewer.ui.browse.images.ImageDiffUtils
 import com.example.deviantartviewer.utils.log.Logger
 
 class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
@@ -26,6 +27,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
 
     lateinit var imageAdapter: ImageAdapter
     var gridLayoutManager = GridLayoutManager(this.context, SPAN_COUNT)
+    var diffUtilsCallback = ImageDiffUtils()
 
     //Dependency injection
     override fun injectDependencies(fragmentComponent: FragmentComponent) {
@@ -37,12 +39,12 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
     override fun setupView(view: View) {
         _binding = FragmentFavoritesBinding.bind(view)
 
-        imageAdapter = ImageAdapter(viewModel.images, viewModel)
+        imageAdapter = ImageAdapter(/*viewModel.images,*/ viewModel, diffUtilsCallback)
 
         binding.rvFavoriteImages.apply {
             layoutManager = gridLayoutManager
             adapter = imageAdapter
-        }//.addItemDecoration(gridSpacingItemDecoration)
+        }
     }
 
     override fun setupObservers(){
@@ -50,7 +52,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
 
         viewModel.imagesReady.observe(this, {
             it.getIfNotHandled()?.run {
-                imageAdapter.updateData()
+                imageAdapter.updateData(viewModel.images)
                 Logger.d(TAG, "FavoritesFragment: append images data to the adapter")
             }
         })

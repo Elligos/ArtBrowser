@@ -10,17 +10,11 @@ import javax.inject.Inject
 
 
 class ImageAdapter (
-        images: ArrayList<Image>,
-        viewmodel: BaseViewModel
-) : BaseAdapter<Image, ImageItemViewHolder>(images, viewmodel){
-
-
-
-//    @Inject
-//    lateinit var vm : BrowseViewModel
+        viewmodel: BaseViewModel,
+        diffUtils: ImageDiffUtils
+) : BaseAdapter<Image, ImageItemViewHolder>(viewmodel, diffUtils){
 
     var vm = viewmodel
-
 
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int) :

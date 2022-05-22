@@ -1,22 +1,15 @@
 package com.example.deviantartviewer.ui.browse
 
-import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.example.deviantartviewer.R
 import com.example.deviantartviewer.data.model.Image
 import com.example.deviantartviewer.databinding.FragmentBrowseBinding
-import com.example.deviantartviewer.databinding.FragmentProfileBinding
 import com.example.deviantartviewer.di.component.FragmentComponent
 import com.example.deviantartviewer.ui.base.BaseFragment
 import com.example.deviantartviewer.ui.browse.images.ImageAdapter
-import com.example.deviantartviewer.ui.login.LoginFragment
-import com.example.deviantartviewer.ui.profile.ProfileViewModel
+import com.example.deviantartviewer.ui.browse.images.ImageDiffUtils
 import com.example.deviantartviewer.utils.log.Logger
-import javax.inject.Inject
 
 class BrowseFragment : BaseFragment<BrowseViewModel>()  {
 
@@ -31,6 +24,7 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
 
     lateinit var imageAdapter: ImageAdapter
     var gridLayoutManager = GridLayoutManager(this.context, SPAN_COUNT)
+    var diffUtilsCallback = ImageDiffUtils()
 
 
     //Dependency injection
@@ -43,12 +37,15 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
     override fun setupView(view: View) {
         _binding = FragmentBrowseBinding.bind(view)
 
-        imageAdapter = ImageAdapter(viewModel.images, viewModel)
+        imageAdapter = ImageAdapter(/*viewModel.images, */viewModel, diffUtilsCallback)
+        imageAdapter.setOnItemClickListener {
+            Logger.d(TAG, "Image \"${it.name}\" clicked!")
+        }
 
         binding.rvBrowsedImages.apply {
             layoutManager = gridLayoutManager
             adapter = imageAdapter
-        }//.addItemDecoration(gridSpacingItemDecoration)
+        }
 
     }
 
@@ -57,7 +54,7 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
 
         viewModel.imagesReady.observe(this, {
             it.getIfNotHandled()?.run {
-                imageAdapter.updateData()
+                imageAdapter.updateData(viewModel.images)
                 Logger.d(TAG, "BrowseFragment: append images data to the adapter")
             }
         })
@@ -65,6 +62,4 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
 
 
     }
-
-
 }

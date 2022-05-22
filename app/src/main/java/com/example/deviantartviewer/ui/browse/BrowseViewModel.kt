@@ -58,7 +58,7 @@ class BrowseViewModel (
                              result.title ?: "",
                     result.preview?.width ?: 0,
                     result.preview?.height ?: 0 )
-            images.add(image)
+            if(image.url != "") images.add(image)
         }
     }
 

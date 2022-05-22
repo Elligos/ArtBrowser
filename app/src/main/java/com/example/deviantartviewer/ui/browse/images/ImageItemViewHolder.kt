@@ -1,9 +1,11 @@
 package com.example.deviantartviewer.ui.browse.images
 
+import android.graphics.ColorFilter
 import android.view.View
 import android.view.ViewGroup
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.example.deviantartviewer.R
 import com.example.deviantartviewer.data.model.Image
 import com.example.deviantartviewer.databinding.ImageViewCardBinding
@@ -19,38 +21,14 @@ class ImageItemViewHolder (parent : ViewGroup, vm : BaseViewModel):
 
     lateinit var binding: ImageViewCardBinding
 
-//    override fun injectDependencies(viewHolderComponent: ViewHolderComponent) {
-//        viewHolderComponent.inject(this)
-//    }
-
     override fun setupView(view: View) {
 
         binding = ImageViewCardBinding.bind(view)
 
-        with(binding){
-            tvImageName.text = "name"
-
-
-        }
-
-//        binding.ivPost.setOnClickListener {
-//            ImageAdapter.RxBus.itemClickStream.onNext(viewModel.data.value!!.url)
-//        }
     }
 
-    override fun setupObservers() {
+     override fun setupObservers() {
         super.setupObservers()
-
-//        viewModel.imageDetail.observe(this, {
-//            it?.run {
-//                val glideRequest = Glide
-//                        .with(binding.ivPost.context)
-//                        .load(url)
-//
-//                glideRequest.into(binding.ivPost)
-//
-//            }
-//        })
     }
 
     override fun bind(data: Image) {
@@ -58,13 +36,16 @@ class ImageItemViewHolder (parent : ViewGroup, vm : BaseViewModel):
         Logger.d("ImageItemViewHolder", "onActivityResult data is null!")
 
         val circularProgressDrawable = CircularProgressDrawable(binding.ivImage.context)
-        circularProgressDrawable.strokeWidth = 5f
-        circularProgressDrawable.centerRadius = 30f
-        circularProgressDrawable.start()
+        circularProgressDrawable.apply {
+            strokeWidth = 5f
+            centerRadius = 30f
+            setColorSchemeColors(R.color.devArtGreen)
+        }.start()
 
         val glideRequest = Glide
                 .with(binding.ivImage.context)
                 .load(data.url)
+                .timeout(3000)
                 .placeholder(circularProgressDrawable)
         glideRequest.into(binding.ivImage)
 

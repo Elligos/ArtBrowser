@@ -1,9 +1,13 @@
 package com.example.deviantartviewer.ui.base
 
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.deviantartviewer.ui.browse.images.ImageDiffUtils
 
 abstract class BaseAdapter<T : Any, VH : BaseItemViewHolder<T, BaseViewModel>>(
-        private val dataList: ArrayList<T>, val viewModel: BaseViewModel
+        val viewModel: BaseViewModel,
+        val diffUtil: DiffUtil.ItemCallback<T>
 ) : RecyclerView.Adapter<VH>() {
 
 private var recyclerView: RecyclerView? = null
@@ -14,29 +18,33 @@ private var recyclerView: RecyclerView? = null
         this.recyclerView = null
     }
 
-    override fun getItemCount(): Int = dataList.size
+    val differ = AsyncListDiffer(this, diffUtil)
+
+    override fun getItemCount(): Int = differ.currentList.size
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        holder.bind(dataList[position])
-    }
+        val item = differ.currentList[position]
 
-    fun appendData(data: List<T>) {
-        val oldCount = itemCount
-        this.dataList.addAll(data)
-        val currentCount = itemCount
-        if (oldCount == 0 && currentCount > 0)
-            notifyDataSetChanged()
-        else if (oldCount in 1 until currentCount)
-            notifyItemRangeChanged(oldCount - 1, currentCount - oldCount)
+        holder.itemView.apply{
+            setOnClickListener {
+                onItemClickListener?.let { it(item) }
+            }
+        }
+        holder.bind(item)
+
     }
 
     fun updateData(data: List<T>){
-        this.dataList.clear()
-        this.dataList.addAll(data)
-        notifyDataSetChanged()
+        differ.submitList(data)
     }
 
     fun updateData(){
         notifyDataSetChanged()
+    }
+
+    private var onItemClickListener: ((T) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (T) -> Unit) {
+        onItemClickListener = listener
     }
 }

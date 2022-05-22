@@ -91,7 +91,6 @@ class ProfileViewModel(
                                 "https://a.deviantart.net/avatars-big")
     }
 
-
     fun logout(){
         authManager.authCompleteSubject.onNext(false)
     }
