@@ -52,7 +52,7 @@ class BrowseViewModel (
     }
 
     private fun fetchImagesFromResponse (response: ImageResponse){
-
+        images.clear()
         for(result in response.results){
             val image = Image( result.preview?.src?:"",
                              result.title ?: "",
@@ -60,6 +60,23 @@ class BrowseViewModel (
                     result.preview?.height ?: 0 )
             if(image.url != "") images.add(image)
         }
+    }
+
+    fun loadNewImages(query : String){
+        compositeDisposable.add(
+                imageRepository.doNewestImagesFetch(query)
+                        .subscribeOn(schedulerProvider.io())
+                        .subscribe(
+                                {
+                                    Logger.d(TAG, "Browse fetch newest request with query $query result: $it")
+                                    fetchImagesFromResponse(it)
+                                    imagesReady.postValue(Event(emptyMap()))
+                                },
+                                {
+                                    Logger.d(TAG, "Browse fetch newest request with query $query failed with exception: $it")
+                                }
+                        )
+        )
     }
 
 

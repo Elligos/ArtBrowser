@@ -29,6 +29,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
     lateinit var binding: ActivityMainBinding
     lateinit var navController : NavController
 
+
     override fun provideLayoutId(): View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         return binding.root
@@ -50,6 +51,8 @@ class MainActivity : BaseActivity<MainViewModel>() {
             onDestinationChanged(destination)
         }
 
+//        setSupportActionBar(binding.toolbar)
+//        supportActionBar?.setDisplayShowTitleEnabled(false)
 
     }
 
@@ -65,6 +68,11 @@ class MainActivity : BaseActivity<MainViewModel>() {
                 binding.bottomNavigation.visibility = View.GONE
             }
         }
+
+//        when(destination.id){
+//            R.id.BrowseFragment -> binding.toolbar.visibility = View.VISIBLE
+//            else -> binding.toolbar.visibility = View.GONE
+//        }
     }
 
     override fun onNavigateUp(): Boolean {
@@ -73,7 +81,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 //        // Inflate the menu; this adds items to the action bar if it is present.
-//        menuInflater.inflate(R.menu.menu_main, menu)
+//        menuInflater.inflate(R.menu.menu_browse, menu)
 //        return true
 //    }
 //

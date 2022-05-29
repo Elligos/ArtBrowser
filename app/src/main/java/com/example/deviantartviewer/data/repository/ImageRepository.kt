@@ -19,8 +19,8 @@ class ImageRepository @Inject constructor(private val networkService: NetworkSer
             networkService.doNewestFetchCall("Bearer "+authManager.getCurrentToken(),
                                               query,
                                             0,
-                                            100,
-                                            false)
+                                            15,
+                                            true)
 
     fun doCollectionsAllFetch() : Single<ImageResponse> =
             networkService.doCollectionsAllFetchCall("Bearer "+authManager.getCurrentToken(),

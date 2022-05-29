@@ -1,6 +1,7 @@
 package com.example.deviantartviewer.ui.browse
 
 import android.view.View
+import android.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.deviantartviewer.R
 import com.example.deviantartviewer.data.model.Image
@@ -47,6 +48,20 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
             adapter = imageAdapter
         }
 
+        binding.svBrowseImages.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                binding.svBrowseImages.clearFocus()
+
+                viewModel.loadNewImages(query ?: "")
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+
+        })
+
     }
 
     override fun setupObservers(){
@@ -63,3 +78,4 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
 
     }
 }
+

@@ -35,6 +35,8 @@ private var recyclerView: RecyclerView? = null
     }
 
     fun updateData(data: List<T>){
+        differ.submitList(null)
+        notifyDataSetChanged()
         differ.submitList(data)
     }
 

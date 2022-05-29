@@ -22,4 +22,11 @@
     <style name="Theme.DeviantArtViewer.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.DeviantArtViewer.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ThemeOverlay.SearchView" parent="">
+        <!-- Text color -->
+        <item name="android:editTextColor">@color/devArtGreen</item>
+        <!-- Hint text color -->
+        <item name="android:textColorHint">@color/devArtGrey</item>
+    </style>
 </resources>

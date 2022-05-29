@@ -47,6 +47,7 @@ class ImageItemViewHolder (parent : ViewGroup, vm : BaseViewModel):
                 .load(data.url)
                 .timeout(3000)
                 .placeholder(circularProgressDrawable)
+                .error(R.drawable.ic_baseline_image_not_supported_24_green)
         glideRequest.into(binding.ivImage)
 
         super.bind(data)
