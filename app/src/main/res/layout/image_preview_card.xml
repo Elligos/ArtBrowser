@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:lines="1"
-            android:text="ImageName"
+            android:text="@string/title"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline12"

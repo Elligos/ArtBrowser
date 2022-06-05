@@ -33,5 +33,15 @@
         android:id="@+id/BrowseFragment"
         android:name="com.example.deviantartviewer.ui.browse.BrowseFragment"
         android:label="BrowseFragment"
-        tools:layout="@layout/fragment_browse"/>
+        tools:layout="@layout/fragment_browse">
+        <action
+            android:id="@+id/action_BrowseFragment_to_ImageFragment"
+            app:destination="@id/ImageFragment"
+            app:popUpTo="@id/BrowseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ImageFragment"
+        android:name="com.example.deviantartviewer.ui.fullimage.ImageFragment"
+        android:label="ImageFragment"
+        tools:layout="@layout/fragment_image"/>
 </navigation>

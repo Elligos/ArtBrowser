@@ -6,9 +6,10 @@ import com.example.deviantartviewer.data.repository.ImageRepository
 import com.example.deviantartviewer.data.repository.UserRepository
 import com.example.deviantartviewer.ui.base.BaseFragment
 import com.example.deviantartviewer.ui.browse.BrowseViewModel
-import com.example.deviantartviewer.ui.browse.images.ImageAdapter
+import com.example.deviantartviewer.ui.fullimage.ImageViewModel
 import com.example.deviantartviewer.ui.favorites.FavoritesViewModel
 import com.example.deviantartviewer.ui.login.LoginViewModel
+import com.example.deviantartviewer.ui.main.MainSharedViewModel
 import com.example.deviantartviewer.ui.profile.ProfileViewModel
 import com.example.deviantartviewer.utils.ViewModelProviderFactory
 import com.example.deviantartviewer.utils.network.NetworkHelper
@@ -69,6 +70,30 @@ class FragmentModule(private val fragment: BaseFragment<*>) {
             fragment, ViewModelProviderFactory(BrowseViewModel::class) {
         BrowseViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager, imageRepository)
     }).get(BrowseViewModel::class.java)
+
+    @Provides
+    fun provideImageViewModel(
+            schedulerProvider: SchedulerProvider,
+            compositeDisposable: CompositeDisposable,
+            networkHelper: NetworkHelper,
+            authManager: AuthManager,
+            imageRepository : ImageRepository
+    ): ImageViewModel = ViewModelProvider(
+            fragment, ViewModelProviderFactory(ImageViewModel::class) {
+        ImageViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager, imageRepository)
+    }).get(ImageViewModel::class.java)
+
+
+    @Provides
+    fun provideMainSharedViewModel(
+            schedulerProvider: SchedulerProvider,
+            compositeDisposable: CompositeDisposable,
+            networkHelper: NetworkHelper,
+            authManager: AuthManager
+    ): MainSharedViewModel = ViewModelProvider(
+            fragment.activity!!, ViewModelProviderFactory(MainSharedViewModel::class) {
+        MainSharedViewModel(schedulerProvider, compositeDisposable, networkHelper,authManager)
+    }).get(MainSharedViewModel::class.java)
 
 //    @Provides
 //    fun provideImageAdapter() = ImageAdapter(ArrayList(), viewModel: BrowseViewModel)

@@ -1,29 +1,26 @@
 package com.example.deviantartviewer.ui.browse.images
 
-import android.graphics.ColorFilter
 import android.view.View
 import android.view.ViewGroup
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.example.deviantartviewer.R
 import com.example.deviantartviewer.data.model.Image
-import com.example.deviantartviewer.databinding.ImageViewCardBinding
+import com.example.deviantartviewer.databinding.ImagePreviewCardBinding
 import com.example.deviantartviewer.ui.base.BaseItemViewHolder
 import com.example.deviantartviewer.ui.base.BaseViewModel
-import com.example.deviantartviewer.ui.login.LoginFragment
 import com.example.deviantartviewer.utils.log.Logger
 
 
 class ImageItemViewHolder (parent : ViewGroup, vm : BaseViewModel):
-        BaseItemViewHolder<Image, BaseViewModel>(R.layout.image_view_card,parent,vm) {
+        BaseItemViewHolder<Image, BaseViewModel>(R.layout.image_preview_card,parent,vm) {
 
 
-    lateinit var binding: ImageViewCardBinding
+    lateinit var binding: ImagePreviewCardBinding
 
     override fun setupView(view: View) {
 
-        binding = ImageViewCardBinding.bind(view)
+        binding = ImagePreviewCardBinding.bind(view)
 
     }
 

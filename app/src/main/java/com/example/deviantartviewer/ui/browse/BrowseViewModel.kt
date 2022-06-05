@@ -56,8 +56,10 @@ class BrowseViewModel (
         for(result in response.results){
             val image = Image( result.preview?.src?:"",
                              result.title ?: "",
+                            result.author?.username ?: "",
+                         result.isFavourited ?: false,
                     result.preview?.width ?: 0,
-                    result.preview?.height ?: 0 )
+                   result.preview?.height ?: 0 )
             if(image.url != "") images.add(image)
         }
     }
@@ -77,6 +79,10 @@ class BrowseViewModel (
                                 }
                         )
         )
+    }
+
+    fun restoreFragmentState(){
+        loadNewImages("")
     }
 
 

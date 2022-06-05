@@ -1,17 +1,17 @@
 <resources>
-    <string name="app_name">DeviantArtViewer</string>
+    <string name="app_name">DeviantArt Browser</string>
     <string name="action_settings">Settings</string>
 
     <!-- Network -->
     <string name="network_connection_error">Internet connection lost, please retry again</string>
 
-    <!-- Strings used for fragments for navigation -->
+    <!-- Strings used in fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Login</string>
     <string name="previous">Join</string>
 
-    <!-- Login and Sign Up -->
+    <!-- Login-->
     <string name="sign_up_text_field">Don\'t have an account? Sign up!</string>
     <string name="sign_in_text_field">Already have an account? Sign in!</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
@@ -48,5 +48,15 @@
     <string name="bottom_menu_browse_string">Browse</string>
     <string name="bottom_menu_favorites_string">Favorites</string>
     <string name="bottom_menu_profile_string">Profile</string>
+
+    <!-- Image -->
+    <string name="back_press_image">Back press image</string>
+    <string name="full_image_container">Full image container</string>
+    <string name="title">Title</string>
+    <string name="author">Author</string>
+    <string name="like_button">Like button</string>
+    <string name="add_to_favorite_button">Add to favorite button</string>
+    <string name="author_name">Jone Doe</string>
+    <string name="add_to_favorite_hint">Add to favorite</string>
 
 </resources>
