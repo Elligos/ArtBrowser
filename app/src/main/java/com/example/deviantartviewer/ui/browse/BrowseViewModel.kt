@@ -30,6 +30,7 @@ class BrowseViewModel (
 
     val images = ArrayList<Image>()
     var imagesReady : MutableLiveData<Event<Map<String, String>>> = MutableLiveData()
+    var newImagesResult : MutableLiveData<Event<Map<String, String>>> = MutableLiveData()
 
     override fun onCreate() {
         Logger.d(TAG, "BrowseViewModel created!")
@@ -54,15 +55,19 @@ class BrowseViewModel (
     private fun fetchImagesFromResponse (response: ImageResponse){
         images.clear()
         for(result in response.results){
+            if(result.isMature == true) continue
+
             val image = Image( result.preview?.src?:"",
                              result.title ?: "",
                             result.author?.username ?: "",
                          result.isFavourited ?: false,
                     result.preview?.width ?: 0,
                    result.preview?.height ?: 0 )
+
             if(image.url != "") images.add(image)
         }
     }
+
 
     fun loadNewImages(query : String){
         compositeDisposable.add(
@@ -73,6 +78,7 @@ class BrowseViewModel (
                                     Logger.d(TAG, "Browse fetch newest request with query $query result: $it")
                                     fetchImagesFromResponse(it)
                                     imagesReady.postValue(Event(emptyMap()))
+                                    newImagesResult.postValue(Event(emptyMap()))
                                 },
                                 {
                                     Logger.d(TAG, "Browse fetch newest request with query $query failed with exception: $it")
@@ -82,7 +88,8 @@ class BrowseViewModel (
     }
 
     fun restoreFragmentState(){
-        loadNewImages("")
+        //loadNewImages("")
+        imagesReady.postValue(Event(emptyMap()))
     }
 
 

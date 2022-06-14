@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.deviantartviewer.R
 import com.example.deviantartviewer.data.model.Image
 import com.example.deviantartviewer.databinding.FragmentBrowseBinding
@@ -54,6 +55,7 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
             mainSharedViewModel.detailedImage.value = it
             findNavController().navigate(R.id.action_BrowseFragment_to_ImageFragment)
         }
+        imageAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
 //        binding.rvBrowsedImages.apply {
 //            layoutManager = gridLayoutManager
@@ -93,13 +95,23 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
             }
         })
 
+        viewModel.newImagesResult.observe(this, {
+            binding.rvBrowsedImages.scrollToPosition(0)
+        })
+
         mainSharedViewModel.backToBrowse.observe(this, {
-            viewModel.loadNewImages("")
+            //viewModel.loadNewImages("")
+            viewModel.restoreFragmentState()
         })
 
 
 
     }
+
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//        outState.putParcelable("layout_key", gridLayoutManager.onSaveInstanceState())
+//    }
 
     override fun onAttach(context: Context) {
         Logger.d(TAG, "BrowseFragment: onAttach()")
