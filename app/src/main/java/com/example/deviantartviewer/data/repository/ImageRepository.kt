@@ -2,7 +2,9 @@ package com.example.deviantartviewer.data.repository
 
 import com.example.deviantartviewer.data.authorization.AuthManager
 import com.example.deviantartviewer.data.remote.NetworkService
+import com.example.deviantartviewer.data.remote.request.FaveRequest
 import com.example.deviantartviewer.data.remote.request.LogoutRequest
+import com.example.deviantartviewer.data.remote.response.FaveResponse
 import com.example.deviantartviewer.data.remote.response.ImageResponse
 import com.example.deviantartviewer.data.remote.response.ProfileResponse
 import com.example.deviantartviewer.data.remote.response.WhoamiResponse
@@ -19,7 +21,7 @@ class ImageRepository @Inject constructor(private val networkService: NetworkSer
             networkService.doNewestFetchCall("Bearer "+authManager.getCurrentToken(),
                                               query,
                                             0,
-                                            30,
+                                            100,
                                             true)
 
     fun doCollectionsAllFetch() : Single<ImageResponse> =
@@ -27,4 +29,16 @@ class ImageRepository @Inject constructor(private val networkService: NetworkSer
                                                     0,
                                                     14)
 
+
+    fun faveCall(deviationid : String) : Single<FaveResponse> =
+            networkService.doFaveCall(  deviationid,
+                                        authManager.getCurrentToken() )
+
+    fun unfaveCall(deviationid : String) : Single<FaveResponse> =
+            networkService.doUnfaveCall(  deviationid,
+                                          authManager.getCurrentToken() )
+
+
+
 }
+

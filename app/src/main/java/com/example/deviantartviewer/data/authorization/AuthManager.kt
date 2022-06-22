@@ -48,7 +48,7 @@ class AuthManager constructor(private val context: Context){
                 ResponseTypeValues.CODE,
                 redirectUri
         )
-        builder.setScope("browse")
+        builder.setScopes("browse", "collection")
 
         val authRequest = builder.build()
         val authService = AuthorizationService(context)

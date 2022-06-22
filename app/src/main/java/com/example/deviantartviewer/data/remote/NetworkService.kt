@@ -1,6 +1,8 @@
 package com.example.deviantartviewer.data.remote
 
+import com.example.deviantartviewer.data.remote.request.FaveRequest
 import com.example.deviantartviewer.data.remote.request.LogoutRequest
+import com.example.deviantartviewer.data.remote.response.FaveResponse
 import com.example.deviantartviewer.data.remote.response.ImageResponse
 import com.example.deviantartviewer.data.remote.response.ProfileResponse
 import com.example.deviantartviewer.data.remote.response.WhoamiResponse
@@ -42,6 +44,23 @@ interface NetworkService {
             @Query("offset") offset: Int?,
             @Query("limit") limit: Int?,
     ) : Single<ImageResponse>
+
+
+    @POST(Endpoints.FAVE)
+    @FormUrlEncoded
+    fun doFaveCall(
+//            @Body faveRequest: FaveRequest
+            @Field("deviationid") deviationid : String,
+            @Field("access_token") access_token : String
+    ): Single<FaveResponse>
+
+    @POST(Endpoints.UNFAVE)
+    @FormUrlEncoded
+    fun doUnfaveCall(
+            @Field("deviationid") deviationid : String,
+            @Field("access_token") access_token : String
+    ): Single<FaveResponse>
+
 
     @POST(Endpoints.LOGOUT)
     fun doLogoutCall(

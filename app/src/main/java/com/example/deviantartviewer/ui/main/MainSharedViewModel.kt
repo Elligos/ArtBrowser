@@ -18,24 +18,7 @@ class MainSharedViewModel(
 
     override fun onCreate() {}
 
-    val homeRedirection = MutableLiveData<Event<Boolean>>()
-
-    val profileRedirection = MutableLiveData<Event<Boolean>>()
-
-    val detailedImage = MutableLiveData<Image>()
-    val backToBrowse = MutableLiveData<Event<Boolean>>()
-
-//    val newPost: MutableLiveData<Event<Post>> = MutableLiveData()
-
-
-
-//    fun onHomeRedirect() {
-//        homeRedirection.postValue(Event(true))
-//    }
-//
-//    fun onProfileRedirect(){
-//        profileRedirection.postValue(Event(true))
-//    }
-
+    val selectedImage = MutableLiveData<Image>()
+    val backFromImageScreen = MutableLiveData<Event<Boolean>>()
 
 }

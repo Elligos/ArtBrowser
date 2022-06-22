@@ -5,9 +5,7 @@ import com.example.deviantartviewer.data.authorization.AuthManager
 import com.example.deviantartviewer.data.model.Image
 import com.example.deviantartviewer.data.remote.response.ImageResponse
 import com.example.deviantartviewer.data.repository.ImageRepository
-import com.example.deviantartviewer.data.repository.UserRepository
 import com.example.deviantartviewer.ui.base.BaseViewModel
-import com.example.deviantartviewer.ui.profile.ProfileViewModel
 import com.example.deviantartviewer.utils.common.Event
 import com.example.deviantartviewer.utils.log.Logger
 import com.example.deviantartviewer.utils.network.NetworkHelper
@@ -57,12 +55,13 @@ class BrowseViewModel (
         for(result in response.results){
             if(result.isMature == true) continue
 
-            val image = Image( result.preview?.src?:"",
-                             result.title ?: "",
-                            result.author?.username ?: "",
-                         result.isFavourited ?: false,
-                    result.preview?.width ?: 0,
-                   result.preview?.height ?: 0 )
+            val image = Image(  url = result.preview?.src?:"",
+                                name = result.title ?: "",
+                                author = result.author?.username ?: "",
+                                isFavorite = result.isFavourited ?: false,
+                                placeholderWidth = result.preview?.width ?: 0,
+                                placeholderHeight = result.preview?.height ?: 0,
+                                deviationid = result.deviationid ?: "" )
 
             if(image.url != "") images.add(image)
         }
@@ -89,6 +88,7 @@ class BrowseViewModel (
 
     fun restoreFragmentState(){
         //loadNewImages("")
+
         imagesReady.postValue(Event(emptyMap()))
     }
 

@@ -2,15 +2,12 @@ package com.example.deviantartviewer.ui.fullimage
 
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.example.deviantartviewer.R
 import com.example.deviantartviewer.databinding.FragmentImageBinding
 import com.example.deviantartviewer.di.component.FragmentComponent
 import com.example.deviantartviewer.ui.base.BaseFragment
-import com.example.deviantartviewer.ui.browse.images.ImageAdapter
-import com.example.deviantartviewer.ui.browse.images.ImageDiffUtils
 import com.example.deviantartviewer.ui.main.MainSharedViewModel
 import com.example.deviantartviewer.utils.common.Event
 import javax.inject.Inject
@@ -26,12 +23,6 @@ class ImageFragment : BaseFragment<ImageViewModel>()  {
     private var _binding: FragmentImageBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var imageAdapter: ImageAdapter
-    var gridLayoutManager = GridLayoutManager(this.context, SPAN_COUNT)
-    var diffUtilsCallback = ImageDiffUtils()
-
-
-
     @Inject
     lateinit var mainSharedViewModel: MainSharedViewModel
 
@@ -46,20 +37,17 @@ class ImageFragment : BaseFragment<ImageViewModel>()  {
         _binding = FragmentImageBinding.bind(view)
         with(binding){
             ivBackArrow.setOnClickListener {
-//                requireActivity().onBackPressed()
-                mainSharedViewModel.backToBrowse.postValue(Event(true))
+                mainSharedViewModel.backFromImageScreen.postValue(Event(true))
                 findNavController().navigateUp()
             }
         }
 
         binding.ivAddToFavorite.setOnClickListener{
-            if(viewModel.image.isFavorited){
-                viewModel.image.isFavorited = false
-                binding.ivAddToFavorite.setImageResource(R.drawable.ic_baseline_star_border_24_green)
+            if(viewModel.imageIsFavorite.value == true){
+                viewModel.removeFromFavorite(viewModel.image.deviationid)
             }
             else{
-                viewModel.image.isFavorited = true
-                binding.ivAddToFavorite.setImageResource(R.drawable.ic_baseline_star_24_green)
+                viewModel.addToFavorite(viewModel.image.deviationid)
             }
         }
 
@@ -69,16 +57,12 @@ class ImageFragment : BaseFragment<ImageViewModel>()  {
     override fun setupObservers(){
         super.setupObservers()
 
-        mainSharedViewModel.detailedImage.observe(this,  {
+        mainSharedViewModel.selectedImage.observe(this,  {
+            viewModel.image = it
+            viewModel.imageIsFavorite.postValue(it.isFavorite)
+
             binding.tvTitle.text = it.name
             binding.tvAuthor.text = it.author
-
-            if(it.isFavorited){
-                binding.ivAddToFavorite.setImageResource(R.drawable.ic_baseline_star_24_green)
-            }
-            else{
-                binding.ivAddToFavorite.setImageResource(R.drawable.ic_baseline_star_border_24_green)
-            }
 
             val circularProgressDrawable = CircularProgressDrawable(binding.ivFullImage.context)
             circularProgressDrawable.apply {
@@ -97,7 +81,20 @@ class ImageFragment : BaseFragment<ImageViewModel>()  {
         })
 
 
-
+        viewModel.imageIsFavorite.observe(this, { favorite ->
+            if(favorite){
+                binding
+                .ivAddToFavorite
+                .setImageResource(R.drawable.ic_baseline_star_24_green)
+                mainSharedViewModel.selectedImage.value?.isFavorite = true
+            }
+            else{
+                binding
+                .ivAddToFavorite
+                .setImageResource(R.drawable.ic_baseline_star_border_24_green)
+                mainSharedViewModel.selectedImage.value?.isFavorite = false
+            }
+        })
 
 
     }

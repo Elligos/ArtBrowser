@@ -27,7 +27,7 @@ private var recyclerView: RecyclerView? = null
 
         holder.itemView.apply{
             setOnClickListener {
-                onItemClickListener?.let { it(item) }
+                onItemClickListener?.let { it(item, position) }
             }
         }
         holder.bind(item)
@@ -44,9 +44,9 @@ private var recyclerView: RecyclerView? = null
         notifyDataSetChanged()
     }
 
-    private var onItemClickListener: ((T) -> Unit)? = null
+    private var onItemClickListener: ((T, Int) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (T) -> Unit) {
+    fun setOnItemClickListener(listener: (T, Int) -> Unit) {
         onItemClickListener = listener
     }
 }

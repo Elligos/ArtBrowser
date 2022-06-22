@@ -13,5 +13,7 @@ object Endpoints {
     const val NEWEST = "browse/newest"
 
     const val COLLECTIONS_ALL = "collections/all"
+    const val FAVE = "collections/fave"
+    const val UNFAVE = "collections/unfave"
 
 }

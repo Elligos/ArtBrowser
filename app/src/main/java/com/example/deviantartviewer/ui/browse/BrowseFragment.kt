@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.deviantartviewer.R
-import com.example.deviantartviewer.data.model.Image
 import com.example.deviantartviewer.databinding.FragmentBrowseBinding
 import com.example.deviantartviewer.di.component.FragmentComponent
 import com.example.deviantartviewer.ui.base.BaseFragment
@@ -35,6 +34,8 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
     var gridLayoutManager = GridLayoutManager(this.context, SPAN_COUNT)
     var diffUtilsCallback = ImageDiffUtils()
 
+    var selectedItemPosition = 0//TODO: move to viewModel
+
 
     @Inject
     lateinit var mainSharedViewModel: MainSharedViewModel
@@ -50,9 +51,10 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
         _binding = FragmentBrowseBinding.bind(view)
 
         imageAdapter = ImageAdapter(/*viewModel.images, */viewModel, diffUtilsCallback)
-        imageAdapter.setOnItemClickListener {
-            Logger.d(TAG, "Image \"${it.name}\" clicked!")
-            mainSharedViewModel.detailedImage.value = it
+        imageAdapter.setOnItemClickListener {image, position ->
+            Logger.d(TAG, "Image \"${image}\" with position $selectedItemPosition clicked!")
+            mainSharedViewModel.selectedImage.value = image
+            selectedItemPosition = position
             findNavController().navigate(R.id.action_BrowseFragment_to_ImageFragment)
         }
         imageAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
@@ -99,8 +101,12 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
             binding.rvBrowsedImages.scrollToPosition(0)
         })
 
-        mainSharedViewModel.backToBrowse.observe(this, {
+        mainSharedViewModel.backFromImageScreen.observe(this, {
             //viewModel.loadNewImages("")
+            if(mainSharedViewModel.selectedImage.value != null ) viewModel.images[selectedItemPosition] = mainSharedViewModel.selectedImage.value!!
+
+ //           mainSharedViewModel.detailedImage.value?.let { viewModel.images[selectedItemPosition] = it }
+
             viewModel.restoreFragmentState()
         })
 
@@ -140,7 +146,7 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
 
 
     override fun onResume() {
-        Logger.d(TAG, "BrowseFragment: onResume()")
+        Logger.d(TAG, "BrowseFragment: onResume() /n selectedItemPosition = $selectedItemPosition")
         super.onResume()
     }
 
