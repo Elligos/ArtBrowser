@@ -28,7 +28,12 @@
         android:id="@+id/FavoritesFragment"
         android:name="com.example.deviantartviewer.ui.favorites.FavoritesFragment"
         android:label="FavoritesFragment"
-        tools:layout="@layout/fragment_favorites"/>
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/action_FavoritesFragment_to_ImageFragment"
+            app:destination="@id/ImageFragment"
+            app:popUpTo="@id/FavoritesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/BrowseFragment"
         android:name="com.example.deviantartviewer.ui.browse.BrowseFragment"

@@ -1,7 +1,10 @@
 package com.example.deviantartviewer.ui.favorites
 
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 import com.example.deviantartviewer.R
 import com.example.deviantartviewer.databinding.FragmentBrowseBinding
 import com.example.deviantartviewer.databinding.FragmentFavoritesBinding
@@ -12,7 +15,9 @@ import com.example.deviantartviewer.ui.browse.BrowseFragment
 import com.example.deviantartviewer.ui.browse.BrowseViewModel
 import com.example.deviantartviewer.ui.browse.images.ImageAdapter
 import com.example.deviantartviewer.ui.browse.images.ImageDiffUtils
+import com.example.deviantartviewer.ui.main.MainSharedViewModel
 import com.example.deviantartviewer.utils.log.Logger
+import javax.inject.Inject
 
 class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
 
@@ -29,6 +34,9 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
     var gridLayoutManager = GridLayoutManager(this.context, SPAN_COUNT)
     var diffUtilsCallback = ImageDiffUtils()
 
+    @Inject
+    lateinit var mainSharedViewModel: MainSharedViewModel
+
     //Dependency injection
     override fun injectDependencies(fragmentComponent: FragmentComponent) {
         fragmentComponent.inject(this)
@@ -39,12 +47,21 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
     override fun setupView(view: View) {
         _binding = FragmentFavoritesBinding.bind(view)
 
-        imageAdapter = ImageAdapter(/*viewModel.images,*/ viewModel, diffUtilsCallback)
+        imageAdapter = ImageAdapter(viewModel, diffUtilsCallback)
+
+        imageAdapter.setOnItemClickListener {image, position ->
+            Logger.d(TAG, "Image \"${image}\" with position $viewModel.selectedItemPosition clicked!")
+            mainSharedViewModel.selectedImage.value = image
+            viewModel.selectedItemPosition = position
+            findNavController().navigate(R.id.action_FavoritesFragment_to_ImageFragment)
+        }
+        imageAdapter.stateRestorationPolicy = PREVENT_WHEN_EMPTY
 
         binding.rvFavoriteImages.apply {
-            layoutManager = gridLayoutManager
-            adapter = imageAdapter
+            if(layoutManager==null) layoutManager = gridLayoutManager
+            if(adapter==null) adapter = imageAdapter
         }
+
     }
 
     override fun setupObservers(){
@@ -57,7 +74,17 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
             }
         })
 
+        mainSharedViewModel.backFromImageScreen.observe(this, {
+            it.getIfNotHandled()?.run{
+                if(mainSharedViewModel.selectedImage.value?.isFavorite == false){
+                    viewModel.images.removeAt(viewModel.selectedItemPosition)
+                    mainSharedViewModel.selectedImage.value = null
+                }
+                viewModel.restoreFragmentState()
+            }
 
+
+        })
 
     }
 }

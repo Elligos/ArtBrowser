@@ -28,6 +28,9 @@ class FavoritesViewModel (
 
     val images = ArrayList<Image>()
     var imagesReady : MutableLiveData<Event<Map<String, String>>> = MutableLiveData()
+    var newImagesResult : MutableLiveData<Event<Map<String, String>>> = MutableLiveData()
+
+    var selectedItemPosition = 0
 
     override fun onCreate() {
         Logger.d(TAG, "FavoritesViewModel created!")
@@ -62,6 +65,10 @@ class FavoritesViewModel (
 
             images.add(image)
         }
+    }
+
+    fun restoreFragmentState(){
+        imagesReady.postValue(Event(emptyMap()))
     }
 
 

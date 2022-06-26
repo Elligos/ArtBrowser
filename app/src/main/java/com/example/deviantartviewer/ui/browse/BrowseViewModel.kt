@@ -30,6 +30,8 @@ class BrowseViewModel (
     var imagesReady : MutableLiveData<Event<Map<String, String>>> = MutableLiveData()
     var newImagesResult : MutableLiveData<Event<Map<String, String>>> = MutableLiveData()
 
+    var selectedItemPosition = 0
+
     override fun onCreate() {
         Logger.d(TAG, "BrowseViewModel created!")
 
