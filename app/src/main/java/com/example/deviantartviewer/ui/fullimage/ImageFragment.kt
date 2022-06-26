@@ -1,6 +1,7 @@
 package com.example.deviantartviewer.ui.fullimage
 
 import android.view.View
+import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
@@ -35,11 +36,14 @@ class ImageFragment : BaseFragment<ImageViewModel>()  {
 
     override fun setupView(view: View) {
         _binding = FragmentImageBinding.bind(view)
+
         with(binding){
             ivBackArrow.setOnClickListener {
-                mainSharedViewModel.backFromImageScreen.postValue(Event(true))
-                findNavController().navigateUp()
+                backUpToPreviousScreen()
             }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this){
+            backUpToPreviousScreen()
         }
 
         binding.ivAddToFavorite.setOnClickListener{
@@ -95,7 +99,10 @@ class ImageFragment : BaseFragment<ImageViewModel>()  {
                 mainSharedViewModel.selectedImage.value?.isFavorite = false
             }
         })
+    }
 
-
+    fun backUpToPreviousScreen(){
+        mainSharedViewModel.backFromImageScreen.postValue(Event(true))
+        findNavController().navigateUp()
     }
 }
