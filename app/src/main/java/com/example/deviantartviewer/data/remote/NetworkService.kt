@@ -2,10 +2,7 @@ package com.example.deviantartviewer.data.remote
 
 import com.example.deviantartviewer.data.remote.request.FaveRequest
 import com.example.deviantartviewer.data.remote.request.LogoutRequest
-import com.example.deviantartviewer.data.remote.response.FaveResponse
-import com.example.deviantartviewer.data.remote.response.ImageResponse
-import com.example.deviantartviewer.data.remote.response.ProfileResponse
-import com.example.deviantartviewer.data.remote.response.WhoamiResponse
+import com.example.deviantartviewer.data.remote.response.*
 import io.reactivex.Single
 import retrofit2.http.*
 import javax.inject.Singleton
@@ -43,7 +40,7 @@ interface NetworkService {
             @Header("Authorization") token: String,
             @Query("offset") offset: Int?,
             @Query("limit") limit: Int?,
-    ) : Single<ImageResponse>
+    ) : Single<CollectionsAllResponse>
 
 
     @POST(Endpoints.FAVE)

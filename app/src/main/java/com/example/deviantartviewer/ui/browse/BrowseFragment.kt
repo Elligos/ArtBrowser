@@ -63,6 +63,30 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
         binding.rvBrowsedImages.apply {
             if(layoutManager==null) layoutManager = gridLayoutManager
             if(adapter==null) adapter = imageAdapter
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy > 0) { //check for scroll down
+                        if (viewModel.nextImagesFetchInProcess) return
+
+                        val visibleItemCount = binding.rvBrowsedImages.childCount
+                        val totalItemCount = binding.rvBrowsedImages.layoutManager!!.itemCount
+                        val firstVisibleItem =
+                                (binding.rvBrowsedImages.layoutManager as GridLayoutManager)
+                                        .findFirstVisibleItemPosition()
+
+ //                       if (viewModel.nextImagesFetchInProcess) {
+                            if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
+//                                viewModel.nextImagesFetchInProcess = false
+//                                Logger.d(TAG, "Image adapter reached the end of list!")
+                                viewModel.nextImagesFetchInProcess = true
+                                viewModel.loadMoreImages(viewModel.currentQuery)
+                            }
+ //                       }
+                    }
+                }
+            })
         }
 
         binding.svBrowseImages.setOnQueryTextListener(object : SearchView.OnQueryTextListener{

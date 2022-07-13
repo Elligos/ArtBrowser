@@ -60,6 +60,27 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
         binding.rvFavoriteImages.apply {
             if(layoutManager==null) layoutManager = gridLayoutManager
             if(adapter==null) adapter = imageAdapter
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy > 0) { //check for scroll down
+                        if (viewModel.nextImagesFetchInProcess) return
+
+                        val visibleItemCount = binding.rvFavoriteImages.childCount
+                        val totalItemCount = binding.rvFavoriteImages.layoutManager!!.itemCount
+                        val firstVisibleItem =
+                                (binding.rvFavoriteImages.layoutManager as GridLayoutManager)
+                                        .findFirstVisibleItemPosition()
+
+                        if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
+                            viewModel.nextImagesFetchInProcess = true
+                            viewModel.loadMoreFavorites()
+                        }
+
+                    }
+                }
+            })
         }
 
     }
@@ -78,6 +99,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
             it.getIfNotHandled()?.run{
                 if(mainSharedViewModel.selectedImage.value?.isFavorite == false){
                     viewModel.images.removeAt(viewModel.selectedItemPosition)
+                    viewModel.fetchedImages = viewModel.images.size
                     mainSharedViewModel.selectedImage.value = null
                 }
                 viewModel.restoreFragmentState()
