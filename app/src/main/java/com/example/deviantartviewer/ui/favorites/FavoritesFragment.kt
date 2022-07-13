@@ -64,21 +64,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
             addOnScrollListener(object : RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    if (dy > 0) { //check for scroll down
-                        if (viewModel.nextImagesFetchInProcess) return
-
-                        val visibleItemCount = binding.rvFavoriteImages.childCount
-                        val totalItemCount = binding.rvFavoriteImages.layoutManager!!.itemCount
-                        val firstVisibleItem =
-                                (binding.rvFavoriteImages.layoutManager as GridLayoutManager)
-                                        .findFirstVisibleItemPosition()
-
-                        if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
-                            viewModel.nextImagesFetchInProcess = true
-                            viewModel.loadMoreFavorites()
-                        }
-
-                    }
+                    onEndOfListListener(dy)
                 }
             })
         }
@@ -108,5 +94,21 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
 
         })
 
+    }
+
+    fun onEndOfListListener(dy : Int){
+        if (dy <= 0) return
+        if (viewModel.nextImagesFetchInProcess) return
+
+        val visibleItemCount = binding.rvFavoriteImages.childCount
+        val totalItemCount = binding.rvFavoriteImages.layoutManager!!.itemCount
+        val firstVisibleItem =
+            (binding.rvFavoriteImages.layoutManager as GridLayoutManager)
+                .findFirstVisibleItemPosition()
+
+        if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
+            viewModel.nextImagesFetchInProcess = true
+            viewModel.loadMoreFavorites()
+        }
     }
 }

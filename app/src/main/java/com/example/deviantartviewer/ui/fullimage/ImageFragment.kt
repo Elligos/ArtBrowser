@@ -77,7 +77,7 @@ class ImageFragment : BaseFragment<ImageViewModel>()  {
 
             val glideRequest = Glide
                     .with(binding.ivFullImage.context)
-                    .load(it.url)
+                    .load(it.content_url)
                     .timeout(3000)
                     .placeholder(circularProgressDrawable)
                     .error(R.drawable.ic_baseline_image_not_supported_24_green)

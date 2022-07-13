@@ -69,7 +69,8 @@ class BrowseViewModel (
         for(result in response.results){
             if(result.isMature == true) continue
 
-            val image = Image(  url = result.preview?.src?:"",
+            val image = Image(  preview_url = result.preview?.src?:"",
+                                content_url = result.content?.src?:"",
                                 name = result.title ?: "",
                                 author = result.author?.username ?: "",
                                 isFavorite = result.isFavourited ?: false,
@@ -77,7 +78,7 @@ class BrowseViewModel (
                                 placeholderHeight = result.preview?.height ?: 0,
                                 deviationid = result.deviationid ?: "" )
 
-            if(image.url != "") images.add(image)
+            if(image.preview_url != "") images.add(image)
         }
     }
 
@@ -86,15 +87,16 @@ class BrowseViewModel (
         for(result in response.results){
             if(result.isMature == true) continue
 
-            val image = Image(  url = result.preview?.src?:"",
-                    name = result.title ?: "",
-                    author = result.author?.username ?: "",
-                    isFavorite = result.isFavourited ?: false,
-                    placeholderWidth = result.preview?.width ?: 0,
-                    placeholderHeight = result.preview?.height ?: 0,
-                    deviationid = result.deviationid ?: "" )
+            val image = Image(  preview_url = result.preview?.src?:"",
+                                content_url = result.content?.src?:"",
+                                name = result.title ?: "",
+                                author = result.author?.username ?: "",
+                                isFavorite = result.isFavourited ?: false,
+                                placeholderWidth = result.preview?.width ?: 0,
+                                placeholderHeight = result.preview?.height ?: 0,
+                                deviationid = result.deviationid ?: "" )
 
-            if(image.url != "") images.add(image)
+            if(image.preview_url != "") images.add(image)
         }
     }
 

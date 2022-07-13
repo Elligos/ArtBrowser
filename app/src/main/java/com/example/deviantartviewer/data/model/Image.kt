@@ -1,7 +1,8 @@
 package com.example.deviantartviewer.data.model
 
 data class Image(
-        var url: String,
+        var preview_url: String,
+        var content_url: String,
         val name: String,
         val author: String = "",
         var isFavorite: Boolean = false,

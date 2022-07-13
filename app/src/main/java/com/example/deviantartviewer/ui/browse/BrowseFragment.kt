@@ -52,7 +52,7 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
 
         imageAdapter = ImageAdapter(viewModel, diffUtilsCallback)
         imageAdapter.setOnItemClickListener {image, position ->
-            Logger.d(TAG, "Image \"${image}\" with position $viewModel.selectedItemPosition clicked!")
+            Logger.d(TAG, "Image \"${image}\" with position ${viewModel.selectedItemPosition} clicked!")
             mainSharedViewModel.selectedImage.value = image
             viewModel.selectedItemPosition = position
             findNavController().navigate(R.id.action_BrowseFragment_to_ImageFragment)
@@ -67,24 +67,7 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
             addOnScrollListener(object : RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    if (dy > 0) { //check for scroll down
-                        if (viewModel.nextImagesFetchInProcess) return
-
-                        val visibleItemCount = binding.rvBrowsedImages.childCount
-                        val totalItemCount = binding.rvBrowsedImages.layoutManager!!.itemCount
-                        val firstVisibleItem =
-                                (binding.rvBrowsedImages.layoutManager as GridLayoutManager)
-                                        .findFirstVisibleItemPosition()
-
- //                       if (viewModel.nextImagesFetchInProcess) {
-                            if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
-//                                viewModel.nextImagesFetchInProcess = false
-//                                Logger.d(TAG, "Image adapter reached the end of list!")
-                                viewModel.nextImagesFetchInProcess = true
-                                viewModel.loadMoreImages(viewModel.currentQuery)
-                            }
- //                       }
-                    }
+                    onEndOfListListener(dy)
                 }
             })
         }
@@ -133,6 +116,23 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
         })
 
 
+
+    }
+
+    fun onEndOfListListener(dy : Int){
+        if (dy <= 0)  return //check for scroll down
+        if (viewModel.nextImagesFetchInProcess) return
+
+        val visibleItemCount = binding.rvBrowsedImages.childCount
+        val totalItemCount = binding.rvBrowsedImages.layoutManager!!.itemCount
+        val firstVisibleItem =
+            (binding.rvBrowsedImages.layoutManager as GridLayoutManager)
+                .findFirstVisibleItemPosition()
+
+        if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
+            viewModel.nextImagesFetchInProcess = true
+            viewModel.loadMoreImages(viewModel.currentQuery)
+        }
 
     }
 

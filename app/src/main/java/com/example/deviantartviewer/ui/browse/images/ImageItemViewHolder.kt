@@ -41,7 +41,7 @@ class ImageItemViewHolder (parent : ViewGroup, vm : BaseViewModel):
 
         val glideRequest = Glide
                 .with(binding.ivImage.context)
-                .load(data.url)
+                .load(data.preview_url)
                 .timeout(3000)
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.ic_baseline_image_not_supported_24_green)
