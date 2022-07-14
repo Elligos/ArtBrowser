@@ -2,6 +2,7 @@ package com.example.deviantartviewer.ui.favorites
 
 import androidx.lifecycle.MutableLiveData
 import com.example.deviantartviewer.data.authorization.AuthManager
+import com.example.deviantartviewer.data.converter.Converter
 import com.example.deviantartviewer.data.model.Image
 import com.example.deviantartviewer.data.remote.response.CollectionsAllResponse
 import com.example.deviantartviewer.data.remote.response.ImageResponse
@@ -31,11 +32,9 @@ class FavoritesViewModel (
 
     val images = ArrayList<Image>()
     var imagesReady : MutableLiveData<Event<Map<String, String>>> = MutableLiveData()
-    var newImagesResult : MutableLiveData<Event<Map<String, String>>> = MutableLiveData()
 
     var selectedItemPosition = 0
 
-    var totalFavorites= 0
     var fetchedImages = 0
     var nextImagesFetchInProcess = false
     var hasMoreToFetch = false
@@ -49,32 +48,32 @@ class FavoritesViewModel (
                         .subscribeOn(schedulerProvider.io())
                         .subscribe(
                                 {
-                                    Logger.d(TAG, "Fetch collections all request result: $it")
-                                    fetchImagesFromResponse(it)
-                                    nextImagesFetchInProcess = false
-                                    fetchedImages += it.results.size
-                                    hasMoreToFetch = it.hasMore ?: false
-                                    imagesReady.postValue(Event(emptyMap()))
+                                    handleInitialFavoritesResponse(it)
                                 },
                                 {
-                                    Logger.d(TAG, "Fetch collections all request failed with exception: $it")
+                                    handleInitialFavoritesResponseError(it)
                                 }
                         )
         )
     }
 
+    private fun handleInitialFavoritesResponse(response: CollectionsAllResponse){
+        Logger.d(TAG, "Fetch collections all request result: $response")
+        fetchImagesFromResponse(response)
+        nextImagesFetchInProcess = false
+        fetchedImages += response.results.size
+        hasMoreToFetch = response.hasMore ?: false
+        imagesReady.postValue(Event(emptyMap()))
+    }
+
+    private fun handleInitialFavoritesResponseError(error : Throwable){
+        Logger.d(TAG, "Fetch collections all request failed with exception: $error")
+    }
+
     private fun fetchImagesFromResponse (response: CollectionsAllResponse){
 
         for(result in response.results){
-            val image = Image(  preview_url = result.preview?.src?:"",
-                                content_url = result.content?.src?:"",
-                                name = result.title ?: "",
-                                author = result.author?.username ?: "",
-                                isFavorite = result.isFavourited ?: false,
-                                placeholderWidth = result.preview?.width ?: 0,
-                                placeholderHeight = result.preview?.height ?: 0,
-                                deviationid = result.deviationid ?: "" )
-
+            val image = Converter.convertToImage(result)
             images.add(image)
         }
     }
@@ -91,20 +90,27 @@ class FavoritesViewModel (
                         .subscribeOn(schedulerProvider.io())
                         .subscribe(
                                 {
-                                    Logger.d(TAG, "Fetch request for more favorite images result: $it")
-                                    addImagesFromResponse(it)
-                                    nextImagesFetchInProcess = false
-                                    fetchedImages += it.results.size
-                                    hasMoreToFetch = it.hasMore ?: false
-                                    imagesReady.postValue(Event(emptyMap()))
-
+                                    handleMoreFavoritesResponse(it)
                                 },
                                 {
-                                    nextImagesFetchInProcess = false
-                                    Logger.d(TAG, "Fetch request for more favorite images failed with exception: $it")
+                                    handleMoreFavoritesResponseError(it)
                                 }
                         )
         )
+    }
+
+    private fun handleMoreFavoritesResponse(response: CollectionsAllResponse){
+        Logger.d(TAG, "Fetch request for more favorite images result: $response")
+        addImagesFromResponse(response)
+        fetchedImages += response.results.size
+        hasMoreToFetch = response.hasMore ?: false
+        nextImagesFetchInProcess = false
+        imagesReady.postValue(Event(emptyMap()))
+    }
+
+    private fun handleMoreFavoritesResponseError(error: Throwable){
+        nextImagesFetchInProcess = false
+        Logger.d(TAG, "Fetch request for more favorite images failed with exception: $error")
     }
 
     private fun addImagesFromResponse (response: CollectionsAllResponse){
@@ -112,15 +118,7 @@ class FavoritesViewModel (
         for(result in response.results){
             if(result.isMature == true) continue
 
-            val image = Image(  preview_url = result.preview?.src?:"",
-                                content_url = result.content?.src?:"",
-                                name = result.title ?: "",
-                                author = result.author?.username ?: "",
-                                isFavorite = result.isFavourited ?: false,
-                                placeholderWidth = result.preview?.width ?: 0,
-                                placeholderHeight = result.preview?.height ?: 0,
-                                deviationid = result.deviationid ?: "" )
-
+            val image = Converter.convertToImage(result)
             if(image.preview_url != "") images.add(image)
         }
     }
