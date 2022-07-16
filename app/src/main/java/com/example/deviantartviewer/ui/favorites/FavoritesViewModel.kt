@@ -5,10 +5,8 @@ import com.example.deviantartviewer.data.authorization.AuthManager
 import com.example.deviantartviewer.data.converter.Converter
 import com.example.deviantartviewer.data.model.Image
 import com.example.deviantartviewer.data.remote.response.CollectionsAllResponse
-import com.example.deviantartviewer.data.remote.response.ImageResponse
 import com.example.deviantartviewer.data.repository.ImageRepository
 import com.example.deviantartviewer.ui.base.BaseViewModel
-import com.example.deviantartviewer.ui.browse.BrowseViewModel
 import com.example.deviantartviewer.utils.common.Event
 import com.example.deviantartviewer.utils.log.Logger
 import com.example.deviantartviewer.utils.network.NetworkHelper
@@ -36,7 +34,7 @@ class FavoritesViewModel (
     var selectedItemPosition = 0
 
     var fetchedImages = 0
-    var nextImagesFetchInProcess = false
+    var fetchInProcess : MutableLiveData<Boolean> = MutableLiveData()
     var hasMoreToFetch = false
 
     override fun onCreate() {
@@ -60,7 +58,7 @@ class FavoritesViewModel (
     private fun handleInitialFavoritesResponse(response: CollectionsAllResponse){
         Logger.d(TAG, "Fetch collections all request result: $response")
         fetchImagesFromResponse(response)
-        nextImagesFetchInProcess = false
+        fetchInProcess.postValue(false)
         fetchedImages += response.results.size
         hasMoreToFetch = response.hasMore ?: false
         imagesReady.postValue(Event(emptyMap()))
@@ -80,11 +78,9 @@ class FavoritesViewModel (
 
     fun loadMoreFavorites(){
 
-        if( !hasMoreToFetch ){
-            nextImagesFetchInProcess = false
-            return
-        }
+        if( !hasMoreToFetch ) return
 
+        fetchInProcess.postValue(true)
         compositeDisposable.add(
                 imageRepository.doCollectionsAllFetch(offset = fetchedImages, FETCH_LIMIT)
                         .subscribeOn(schedulerProvider.io())
@@ -104,12 +100,12 @@ class FavoritesViewModel (
         addImagesFromResponse(response)
         fetchedImages += response.results.size
         hasMoreToFetch = response.hasMore ?: false
-        nextImagesFetchInProcess = false
+        fetchInProcess.postValue(false)
         imagesReady.postValue(Event(emptyMap()))
     }
 
     private fun handleMoreFavoritesResponseError(error: Throwable){
-        nextImagesFetchInProcess = false
+        fetchInProcess.postValue(false)
         Logger.d(TAG, "Fetch request for more favorite images failed with exception: $error")
     }
 

@@ -6,13 +6,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 import com.example.deviantartviewer.R
-import com.example.deviantartviewer.databinding.FragmentBrowseBinding
 import com.example.deviantartviewer.databinding.FragmentFavoritesBinding
-import com.example.deviantartviewer.databinding.FragmentProfileBinding
 import com.example.deviantartviewer.di.component.FragmentComponent
 import com.example.deviantartviewer.ui.base.BaseFragment
-import com.example.deviantartviewer.ui.browse.BrowseFragment
-import com.example.deviantartviewer.ui.browse.BrowseViewModel
 import com.example.deviantartviewer.ui.browse.images.ImageAdapter
 import com.example.deviantartviewer.ui.browse.images.ImageDiffUtils
 import com.example.deviantartviewer.ui.main.MainSharedViewModel
@@ -81,6 +77,10 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
             }
         })
 
+        viewModel.fetchInProcess.observe(this, {
+            binding.pbLoading.visibility = if(it) View.VISIBLE else View.INVISIBLE
+        })
+
         mainSharedViewModel.backFromImageScreen.observe(this, {
             it.getIfNotHandled()?.run{
                 if(mainSharedViewModel.selectedImage.value?.isFavorite == false){
@@ -98,7 +98,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
 
     fun onEndOfListListener(dy : Int){
         if (dy <= 0) return
-        if (viewModel.nextImagesFetchInProcess) return
+        if (viewModel.fetchInProcess.value != false) return
 
         val visibleItemCount = binding.rvFavoriteImages.childCount
         val totalItemCount = binding.rvFavoriteImages.layoutManager!!.itemCount
@@ -107,7 +107,6 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
                 .findFirstVisibleItemPosition()
 
         if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
-            viewModel.nextImagesFetchInProcess = true
             viewModel.loadMoreFavorites()
         }
     }

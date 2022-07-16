@@ -52,12 +52,14 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
 
         imageAdapter = ImageAdapter(viewModel, diffUtilsCallback)
         imageAdapter.setOnItemClickListener {image, position ->
-            Logger.d(TAG, "Image \"${image}\" with position ${viewModel.selectedItemPosition} clicked!")
+            Logger.d(TAG, "Image \"${image}\" with " +
+                    "position ${viewModel.selectedItemPosition} clicked!")
             mainSharedViewModel.selectedImage.value = image
             viewModel.selectedItemPosition = position
             findNavController().navigate(R.id.action_BrowseFragment_to_ImageFragment)
         }
-        imageAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        imageAdapter.stateRestorationPolicy =
+                RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
 
         binding.rvBrowsedImages.apply {
@@ -104,6 +106,10 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
             binding.rvBrowsedImages.scrollToPosition(0)
         })
 
+        viewModel.fetchInProcess.observe(this, {
+            binding.pbLoading.visibility = if (it) View.VISIBLE else View.GONE
+        })
+
         mainSharedViewModel.backFromImageScreen.observe(this, {
 
             it.getIfNotHandled()?.run{
@@ -121,7 +127,7 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
 
     fun onEndOfListListener(dy : Int){
         if (dy <= 0)  return //check for scroll down
-        if (viewModel.nextImagesFetchInProcess) return
+        if (viewModel.fetchInProcess.value != false) return
 
         val visibleItemCount = binding.rvBrowsedImages.childCount
         val totalItemCount = binding.rvBrowsedImages.layoutManager!!.itemCount
@@ -130,7 +136,7 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
                 .findFirstVisibleItemPosition()
 
         if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
-            viewModel.nextImagesFetchInProcess = true
+//            viewModel.nextImagesFetchInProcess = true
             viewModel.loadMoreImages(viewModel.currentQuery)
         }
 

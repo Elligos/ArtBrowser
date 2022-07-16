@@ -36,7 +36,7 @@ class BrowseViewModel (
 
     var fetchedImages = 0
     var maxImagesToFetch = 0
-    var nextImagesFetchInProcess = false
+    var fetchInProcess : MutableLiveData<Boolean> = MutableLiveData(false)
     var newUploadedImagesAmount = 0
 
     var currentQuery = ""
@@ -64,9 +64,9 @@ class BrowseViewModel (
     private fun handleInitialNewImagesResponse(response: ImageResponse){
         Logger.d(TAG, "Browse fetch newest request result: $response")
         fetchImagesFromResponse(response)
-        imagesReady.postValue(Event(emptyMap()))
         fetchedImages = FETCH_LIMIT
         newUploadedImagesAmount = 0
+        imagesReady.postValue(Event(emptyMap()))
     }
 
     private fun handleInitialNewImagesResponseError(error : Throwable){
@@ -114,10 +114,10 @@ class BrowseViewModel (
     }
 
     fun loadMoreImages(query : String){
-        if(fetchedImages + FETCH_LIMIT >= maxImagesToFetch){
-            nextImagesFetchInProcess = false
-            return
-        }
+        if(fetchedImages + FETCH_LIMIT >= maxImagesToFetch) return
+
+        fetchInProcess.postValue(true)
+
         val offset = fetchedImages+newUploadedImagesAmount
         compositeDisposable.add(
                 imageRepository.doNewestImagesFetch(query, offset, FETCH_LIMIT)
@@ -143,7 +143,7 @@ class BrowseViewModel (
         addImagesFromResponse(response, amountToSkip = duplicatesAmount)
         newUploadedImagesAmount += duplicatesAmount
         fetchedImages += FETCH_LIMIT
-        nextImagesFetchInProcess = false
+        fetchInProcess.postValue(false)
         imagesReady.postValue(Event(emptyMap()))
 
         Logger.d(TAG, "Found $duplicatesAmount duplicates in browse fetch newest request ")
@@ -151,7 +151,7 @@ class BrowseViewModel (
     }
 
     private fun handleMoreImagesResponseError(query : String, error: Throwable){
-        nextImagesFetchInProcess = false
+        fetchInProcess.postValue(false)
         Logger.d(TAG, "Browse fetch newest request for more images with query $query failed " +
                     "with exception: $error")
     }
