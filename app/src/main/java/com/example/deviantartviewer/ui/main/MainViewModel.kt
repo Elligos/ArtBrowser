@@ -19,6 +19,8 @@ class MainViewModel(
 
 //    val profileNavigation = MutableLiveData<Event<Boolean>>()
 //    val homeNavigation = MutableLiveData<Event<Boolean>>()
+
+    val internetAvailable = networkHelper.connectionLiveData
 //
     override fun onCreate() {
 //        if (!userRepository.isThemeChange()) {

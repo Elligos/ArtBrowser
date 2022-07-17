@@ -74,6 +74,9 @@ dependencies {
     // CardView
     implementation "androidx.cardview:cardview:1.0.0"
 
+    // Snackbar
+    implementation  'com.github.Redman1037:TSnackBar:V2.0.0'
+
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 

@@ -20,6 +20,8 @@ class NetworkHelper constructor(private val context: Context) {
         private const val TAG = "NetworkHelper"
     }
 
+    var connectionLiveData: ConnectionLiveData = ConnectionLiveData(context)
+
     fun isNetworkConnected(): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = cm.activeNetworkInfo

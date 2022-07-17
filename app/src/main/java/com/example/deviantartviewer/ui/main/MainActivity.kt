@@ -1,23 +1,18 @@
 package com.example.deviantartviewer.ui.main
 
-import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import com.example.deviantartviewer.R
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.androidadvance.topsnackbar.TSnackbar
+import com.example.deviantartviewer.R
 import com.example.deviantartviewer.databinding.ActivityMainBinding
 import com.example.deviantartviewer.di.component.ActivityComponent
 import com.example.deviantartviewer.ui.base.BaseActivity
-import com.example.deviantartviewer.utils.log.Logger
-import com.jakewharton.retrofit2.adapter.rxjava2.Result.response
-import net.openid.appauth.*
-import javax.inject.Inject
 
 
 class MainActivity : BaseActivity<MainViewModel>() {
@@ -28,7 +23,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
     lateinit var binding: ActivityMainBinding
     lateinit var navController : NavController
-
+    lateinit var  networkErrorSnackbar : TSnackbar
 
     override fun provideLayoutId(): View {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -51,9 +46,20 @@ class MainActivity : BaseActivity<MainViewModel>() {
             onDestinationChanged(destination)
         }
 
+        setupSnackbar()
+
 //        setSupportActionBar(binding.toolbar)
 //        supportActionBar?.setDisplayShowTitleEnabled(false)
 
+    }
+
+    override fun setupObservers() {
+        super.setupObservers()
+
+        viewModel.internetAvailable.observe(this, {
+            if (it == true) networkErrorSnackbar.dismiss()
+            else networkErrorSnackbar.show()
+        })
     }
 
     private fun onDestinationChanged(destination: NavDestination) {
@@ -77,6 +83,15 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
     override fun onNavigateUp(): Boolean {
         return navController.navigateUp() || super.onNavigateUp()
+    }
+
+    private fun setupSnackbar(){
+        networkErrorSnackbar = TSnackbar
+                .make(binding.clSnackbar, "OOPS, NO INTERNET CONNECTION !", TSnackbar.LENGTH_INDEFINITE)
+        networkErrorSnackbar.setIconRight(R.drawable.ic_baseline_wifi_off_24_white, 24f)
+        val snackbarView = networkErrorSnackbar.view
+        val textView = snackbarView.findViewById<View>(com.androidadvance.topsnackbar.R.id.snackbar_text) as TextView
+        textView.setTextColor(Color.WHITE)
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
