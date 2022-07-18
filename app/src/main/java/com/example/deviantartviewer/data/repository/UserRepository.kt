@@ -2,7 +2,7 @@ package com.example.deviantartviewer.data.repository
 
 import com.example.deviantartviewer.data.authorization.AuthManager
 import com.example.deviantartviewer.data.remote.NetworkService
-import com.example.deviantartviewer.data.remote.request.LogoutRequest
+import com.example.deviantartviewer.data.remote.response.LogoutResponse
 import com.example.deviantartviewer.data.remote.response.ProfileResponse
 import com.example.deviantartviewer.data.remote.response.WhoamiResponse
 import io.reactivex.Single
@@ -26,9 +26,7 @@ class UserRepository @Inject constructor(private val networkService: NetworkServ
                                         with_session = false,
                                         mature_content = false)
 
-    fun logoutCall() : Single<String> =
-            networkService.doLogoutCall(//"Bearer "+authManager.getCurrentToken(),
-//                                        authManager.getCurrentToken(),
-//                                        true
-                                        LogoutRequest( authManager.getCurrentToken()/*, true*/))
+    fun logoutCall() : Single<LogoutResponse> =
+            networkService.doLogoutCall(authManager.getCurrentToken())
+
 }

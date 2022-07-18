@@ -92,7 +92,20 @@ class ProfileViewModel(
     }
 
     fun logout(){
-        authManager.authCompleteSubject.onNext(false)
+        compositeDisposable.add(
+                userRepository.logoutCall()
+                        .subscribeOn(schedulerProvider.io())
+                        .subscribe(
+                                {
+                                    Logger.d(TAG, "Logout request result: $it")
+                                    authManager.authCompleteSubject.onNext(false)
+                                },
+                                {
+                                    Logger.d(TAG, "Logout request failed with exception: $it")
+                                }
+                        )
+        )
+
     }
 
 

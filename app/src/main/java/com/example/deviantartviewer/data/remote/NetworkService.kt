@@ -1,7 +1,5 @@
 package com.example.deviantartviewer.data.remote
 
-import com.example.deviantartviewer.data.remote.request.FaveRequest
-import com.example.deviantartviewer.data.remote.request.LogoutRequest
 import com.example.deviantartviewer.data.remote.response.*
 import io.reactivex.Single
 import retrofit2.http.*
@@ -46,7 +44,6 @@ interface NetworkService {
     @POST(Endpoints.FAVE)
     @FormUrlEncoded
     fun doFaveCall(
-//            @Body faveRequest: FaveRequest
             @Field("deviationid") deviationid : String,
             @Field("access_token") access_token : String
     ): Single<FaveResponse>
@@ -60,11 +57,9 @@ interface NetworkService {
 
 
     @POST(Endpoints.LOGOUT)
+    @FormUrlEncoded
     fun doLogoutCall(
-//            @Header("Authorization") authToken: String,
-//            @Query("token") token: String,
-//            @Query("revoke_refresh_only") revoke_refresh_only: Boolean
-            @Body logoutRequest: LogoutRequest
-    ): Single<String>
+            @Field("token") token: String,
+    ): Single<LogoutResponse>
 
 }
