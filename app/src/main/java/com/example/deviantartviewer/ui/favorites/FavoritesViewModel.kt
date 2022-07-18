@@ -39,8 +39,11 @@ class FavoritesViewModel (
 
     override fun onCreate() {
         Logger.d(TAG, "FavoritesViewModel created!")
+        loadInitialFavorites()
+    }
 
-
+    private fun loadInitialFavorites(){
+        fetchInProcess.postValue(true)
         compositeDisposable.add(
                 imageRepository.doCollectionsAllFetch(0, FETCH_LIMIT)
                         .subscribeOn(schedulerProvider.io())
@@ -65,6 +68,7 @@ class FavoritesViewModel (
     }
 
     private fun handleInitialFavoritesResponseError(error : Throwable){
+        fetchInProcess.postValue(false)
         Logger.d(TAG, "Fetch collections all request failed with exception: $error")
     }
 

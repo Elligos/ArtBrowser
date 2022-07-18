@@ -45,8 +45,11 @@ class BrowseViewModel (
 
     override fun onCreate() {
         Logger.d(TAG, "BrowseViewModel created!")
+        loadInitialNewImages()
+    }
 
-
+    private fun loadInitialNewImages(){
+        fetchInProcess.postValue(true)
         compositeDisposable.add(
                 imageRepository.doNewestImagesFetch("", DEFAULT_FETCH_OFFSET, FETCH_LIMIT)
                         .subscribeOn(schedulerProvider.io())
@@ -66,10 +69,12 @@ class BrowseViewModel (
         fetchImagesFromResponse(response)
         fetchedImages = FETCH_LIMIT
         newUploadedImagesAmount = 0
+        fetchInProcess.postValue(false)
         imagesReady.postValue(Event(emptyMap()))
     }
 
     private fun handleInitialNewImagesResponseError(error : Throwable){
+        fetchInProcess.postValue(false)
         Logger.d(TAG, "Browse fetch newest request failed with exception: $error")
     }
 
@@ -85,6 +90,7 @@ class BrowseViewModel (
     }
 
     fun loadNewImages(query : String){
+        fetchInProcess.postValue(true)
         compositeDisposable.add(
                 imageRepository.doNewestImagesFetch(query, DEFAULT_FETCH_OFFSET, FETCH_LIMIT)
                         .subscribeOn(schedulerProvider.io())
@@ -103,6 +109,7 @@ class BrowseViewModel (
         Logger.d(TAG, "Browse fetch newest request with query $query result: $response")
         currentQuery = query
         fetchImagesFromResponse(response)
+        fetchInProcess.postValue(false)
         imagesReady.postValue(Event(emptyMap()))
         newImagesResult.postValue(Event(emptyMap()))
         fetchedImages = FETCH_LIMIT
@@ -110,6 +117,7 @@ class BrowseViewModel (
     }
 
     private fun handleNewImagesResponseError(query : String, error : Throwable){
+        fetchInProcess.postValue(false)
         Logger.d(TAG, "Browse fetch newest request with query $query failed with exception: $error")
     }
 
