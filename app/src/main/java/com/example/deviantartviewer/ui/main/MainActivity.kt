@@ -47,16 +47,12 @@ class MainActivity : BaseActivity<MainViewModel>() {
         }
 
         setupSnackbar()
-
-//        setSupportActionBar(binding.toolbar)
-//        supportActionBar?.setDisplayShowTitleEnabled(false)
-
     }
 
     override fun setupObservers() {
         super.setupObservers()
 
-        viewModel.internetAvailable.observe(this, {
+        viewModel.getNetworkConnected().observe(this, {
             if (it == true) networkErrorSnackbar.dismiss()
             else networkErrorSnackbar.show()
         })
@@ -74,11 +70,6 @@ class MainActivity : BaseActivity<MainViewModel>() {
                 binding.bottomNavigation.visibility = View.GONE
             }
         }
-
-//        when(destination.id){
-//            R.id.BrowseFragment -> binding.toolbar.visibility = View.VISIBLE
-//            else -> binding.toolbar.visibility = View.GONE
-//        }
     }
 
     override fun onNavigateUp(): Boolean {
@@ -93,23 +84,5 @@ class MainActivity : BaseActivity<MainViewModel>() {
         val textView = snackbarView.findViewById<View>(com.androidadvance.topsnackbar.R.id.snackbar_text) as TextView
         textView.setTextColor(Color.WHITE)
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        menuInflater.inflate(R.menu.menu_browse, menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        return when (item.itemId) {
-//            R.id.action_settings -> true
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
-
-
 
 }

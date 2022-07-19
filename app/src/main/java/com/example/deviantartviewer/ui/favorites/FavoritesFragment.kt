@@ -64,7 +64,6 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
                 }
             })
         }
-
     }
 
     override fun setupObservers(){
@@ -90,8 +89,6 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
                 }
                 viewModel.restoreFragmentState()
             }
-
-
         })
 
     }
