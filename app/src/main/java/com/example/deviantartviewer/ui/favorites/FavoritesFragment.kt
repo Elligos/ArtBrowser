@@ -107,4 +107,9 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
             viewModel.loadMoreFavorites()
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

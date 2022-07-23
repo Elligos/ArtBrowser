@@ -4,15 +4,17 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
-import com.bumptech.glide.util.ViewPreloadSizeProvider
 import com.example.deviantartviewer.DeviantArtApp
 import com.example.deviantartviewer.data.authorization.AuthManager
+import com.example.deviantartviewer.data.local.db.DatabaseService
+import com.example.deviantartviewer.data.local.db.dao.UserDao
 import com.example.deviantartviewer.data.remote.NetworkService
 import com.example.deviantartviewer.data.remote.Networking
 import com.example.deviantartviewer.di.ApplicationContext
 import com.example.deviantartviewer.utils.network.NetworkHelper
 import com.example.deviantartviewer.utils.rx.RxSchedulerProvider
 import com.example.deviantartviewer.utils.rx.SchedulerProvider
+import com.example.deviantartviewer.data.local.storage.AppStorageManager
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -53,6 +55,10 @@ class ApplicationModule(private val application: DeviantArtApp) {
     @Provides
     fun provideAuthManager(): AuthManager = AuthManager(application)
 
+    @Singleton
+    @Provides
+    fun provideAppStorageManager(): AppStorageManager = AppStorageManager(application)
+
     @Provides
     @Singleton
     fun provideNetworkService(): NetworkService =
@@ -62,5 +68,17 @@ class ApplicationModule(private val application: DeviantArtApp) {
                     application.cacheDir,
                     10 * 1024 * 1024 // 10MB
             )
+
+    @Provides
+    @Singleton
+    fun provideDatabaseService() : DatabaseService =
+            Room.databaseBuilder(
+                    application, DatabaseService::class.java,
+                    "userinfo_database"
+            ).build()
+
+    @Provides
+    @Singleton
+    fun provideUserDao(database: DatabaseService): UserDao = database.userDao()
 
 }

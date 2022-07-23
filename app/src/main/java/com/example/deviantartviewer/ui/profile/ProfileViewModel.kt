@@ -1,19 +1,19 @@
 package com.example.deviantartviewer.ui.profile
 
-import android.content.Intent
-import android.os.UserManager
+import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import com.example.deviantartviewer.data.authorization.AuthManager
+import com.example.deviantartviewer.data.converter.Converter
+import com.example.deviantartviewer.data.model.User
 import com.example.deviantartviewer.data.remote.response.ProfileResponse
 import com.example.deviantartviewer.data.repository.UserRepository
 import com.example.deviantartviewer.ui.base.BaseViewModel
-import com.example.deviantartviewer.ui.login.LoginFragment
 import com.example.deviantartviewer.utils.common.Event
 import com.example.deviantartviewer.utils.log.Logger
 import com.example.deviantartviewer.utils.network.NetworkHelper
 import com.example.deviantartviewer.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
-
+import java.lang.Exception
 
 
 class ProfileViewModel(
@@ -31,16 +31,9 @@ class ProfileViewModel(
     }
 
     val imageUrl : MutableLiveData<String> = MutableLiveData()
-    val username : MutableLiveData<String> = MutableLiveData()
-    val birthday : MutableLiveData<String> = MutableLiveData()
-    val country : MutableLiveData<String> = MutableLiveData()
-    val profileViews : MutableLiveData<String> = MutableLiveData()
-    val watchingYou : MutableLiveData<String> = MutableLiveData()
-    val youWatching : MutableLiveData<String> = MutableLiveData()
-    val favorites : MutableLiveData<String> = MutableLiveData()
-    val commentsMade : MutableLiveData<String> = MutableLiveData()
-    val commentsReceived : MutableLiveData<String> = MutableLiveData()
+    val imageUri : MutableLiveData<String> = MutableLiveData()
 
+    val userInfo : MutableLiveData<User> = MutableLiveData()
     val launchLogin: MutableLiveData<Event<Map<String, String>>> = MutableLiveData()
 
 
@@ -48,19 +41,8 @@ class ProfileViewModel(
         Logger.d(TAG, "ProfileViewModel created")
         Logger.d(TAG, "Auth token: ${authManager.getCurrentToken()}")
 
-        compositeDisposable.add(
-                userRepository.doUserProfileFetch()
-                        .subscribeOn(schedulerProvider.io())
-                        .subscribe(
-                                {
-                                    Logger.d(TAG, "Profile request result: $it")
-                                    updateProfileWithResponseData(it)
-                                },
-                                {
-                                    Logger.d(TAG, "Profile request failed with exception: $it")
-                                }
-                        )
-        )
+        if(userRepository.getUserOutdated()) updateProfileDataFromNetwork()
+        else loadProfileDataFromLocal()
 
         compositeDisposable.add(
                 authManager.authCompleteSubject.subscribe {authorized ->
@@ -70,25 +52,95 @@ class ProfileViewModel(
 
     }
 
-    fun updateProfileWithResponseData(data : ProfileResponse){
-
-        val bigAvatarUrl = convertToBigAvatarUrl(data.user?.usericon?:"")
-
-        imageUrl.postValue(bigAvatarUrl)
-        username.postValue(data.user?.username)
-        birthday.postValue("${data.user?.details?.age} years")
-        country.postValue(data.user?.geo?.country)
-        profileViews.postValue("${data.stats?.profilePageviews}")
-        favorites.postValue("${data.stats?.userFavourites}")
-        commentsMade.postValue("${data.stats?.userComments}")
-        commentsReceived.postValue("${data.stats?.profileComments}")
-        watchingYou.postValue("${data.user?.userStats?.watchers}")
-        youWatching.postValue("${data.user?.userStats?.friends}")
+    private fun updateProfileDataFromNetwork(){
+        compositeDisposable.add(
+                userRepository.doUserProfileFetch()
+                        .subscribeOn(schedulerProvider.io())
+                        .subscribe(
+                                {
+                                    Logger.d(TAG, "Profile request result: $it")
+                                    userRepository.setUserOutdated(false)
+                                    updateProfileWithResponseData(it)
+                                },
+                                {
+                                    Logger.d(TAG, "Profile request failed with exception: $it")
+                                }
+                        )
+        )
     }
 
-    fun convertToBigAvatarUrl(avatarUrl : String) : String{
-        return avatarUrl.replace("https://a.deviantart.net/avatars",
-                                "https://a.deviantart.net/avatars-big")
+    private fun updateProfileWithResponseData(data : ProfileResponse){
+        val user = Converter.convertToUser(data)
+        userInfo.postValue(user)
+        imageUrl.postValue(user.usericon_url)
+    }
+
+    fun saveImageToInternalStorage(bitmap : Bitmap){
+        compositeDisposable.add(
+                userRepository.saveImage(bitmap)
+                        .subscribeOn(schedulerProvider.io())
+                        .subscribe(
+                            {
+                                val user = userInfo.value
+                                if(user != null) {
+                                    user.usericon_uri = it
+                                    saveUserInfoToDb(user)
+                                    Logger.d(TAG, "User icon successfully saved to the storage: $it")
+                                }
+                                else{
+                                    Logger.d(TAG, "User is null !")
+                                    throw Exception("user is null!")
+                                }
+
+                            },
+                            {
+                                Logger.d(TAG, "User icon save failed with exception: $it")
+                            }
+                        )
+        )
+    }
+
+
+    private fun saveUserInfoToDb(user : User){
+        val userEntity = Converter.convertToUserEntity(user)
+
+        compositeDisposable.add(
+                userRepository.saveUser(userEntity)
+                        .subscribeOn(schedulerProvider.io())
+                        .subscribe(
+                                {
+                                    Logger.d(TAG, "User info successfully saved to the database!")
+                                    userRepository.saveUserId(userEntity.userid)
+                                },
+                                {
+                                    Logger.d(TAG, "User info save failed with exception: $it")
+                                }
+                        )
+        )
+    }
+
+    private fun loadProfileDataFromLocal(){
+        val userid = userRepository.getUserId()
+        readUserInfoFromDb(userid)
+    }
+
+    private fun readUserInfoFromDb(userid : String){
+        compositeDisposable.add(
+                userRepository.getUser(userid)
+                        .subscribeOn(schedulerProvider.io())
+                        .subscribe(
+                                {
+                                    Logger.d(TAG, "User info successfully read from database!")
+                                    Logger.d(TAG, "User info: $it")
+                                    val user = Converter.convertToUser(it)
+                                    userInfo.postValue(user)
+                                    imageUri.postValue(user.usericon_uri)
+                                },
+                                {
+                                    Logger.d(TAG, "User info read failed with exception: $it")
+                                }
+                        )
+        )
     }
 
     fun logout(){
@@ -107,7 +159,5 @@ class ProfileViewModel(
         )
 
     }
-
-
 
 }

@@ -18,7 +18,8 @@ class LoginViewModel(
     schedulerProvider: SchedulerProvider,
     compositeDisposable: CompositeDisposable,
     networkHelper: NetworkHelper,
-    authManager: AuthManager
+    authManager: AuthManager,
+    private val userRepository: UserRepository
 ) : BaseViewModel(
     schedulerProvider, compositeDisposable, networkHelper, authManager
 ){
@@ -46,6 +47,10 @@ class LoginViewModel(
                 if (authorized == true) launchMain.postValue(Event(emptyMap()))
             }
         )
+    }
+
+    fun setProfileNeedUpdate(){
+        userRepository.setUserOutdated(true)
     }
 
 

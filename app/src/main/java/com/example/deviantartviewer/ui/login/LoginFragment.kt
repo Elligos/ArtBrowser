@@ -11,8 +11,11 @@ import com.example.deviantartviewer.data.authorization.AuthManager
 import com.example.deviantartviewer.databinding.FragmentLoginBinding
 import com.example.deviantartviewer.di.component.FragmentComponent
 import com.example.deviantartviewer.ui.base.BaseFragment
+import com.example.deviantartviewer.ui.main.MainSharedViewModel
+import com.example.deviantartviewer.utils.common.Event
 import com.example.deviantartviewer.utils.log.Logger
 import net.openid.appauth.*
+import javax.inject.Inject
 
 
 class LoginFragment : BaseFragment<LoginViewModel>() {
@@ -30,6 +33,9 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
         fragmentComponent.inject(this)
     }
 
+    @Inject
+    lateinit var mainSharedViewModel: MainSharedViewModel
+
     override fun provideLayoutId(): Int   = R.layout.fragment_login
 
     override fun setupView(view: View) {
@@ -46,6 +52,7 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
         super.setupObservers()
         viewModel.launchMain.observe(this, {
             it.getIfNotHandled()?.run {
+                viewModel.setProfileNeedUpdate()
                 findNavController().navigate(R.id.action_LoginFragment_to_profileFragment)
             }
         })
@@ -64,6 +71,11 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
             viewModel.requestTokenWithData(data)
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

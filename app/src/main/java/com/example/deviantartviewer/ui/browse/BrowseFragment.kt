@@ -142,6 +142,11 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
 
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 //    override fun onSaveInstanceState(outState: Bundle) {
 //        super.onSaveInstanceState(outState)
 //        outState.putParcelable("layout_key", gridLayoutManager.onSaveInstanceState())
@@ -189,10 +194,10 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
         super.onStop()
     }
 
-    override fun onDestroyView() {
-        Logger.d(TAG, "BrowseFragment: onDestroyView()")
-        super.onDestroyView()
-    }
+//    override fun onDestroyView() {
+//        Logger.d(TAG, "BrowseFragment: onDestroyView()")
+//        super.onDestroyView()
+//    }
 
     override fun onDestroy() {
         Logger.d(TAG, "BrowseFragment: onDestroy()")

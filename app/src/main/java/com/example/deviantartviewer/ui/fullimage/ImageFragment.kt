@@ -105,4 +105,9 @@ class ImageFragment : BaseFragment<ImageViewModel>()  {
         mainSharedViewModel.backFromImageScreen.postValue(Event(true))
         findNavController().navigateUp()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
