@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.deviantartviewer.data.authorization.AuthManager
 import com.example.deviantartviewer.data.model.Image
 import com.example.deviantartviewer.data.repository.ImageRepository
+import com.example.deviantartviewer.data.repository.UserRepository
 import com.example.deviantartviewer.ui.base.BaseViewModel
 import com.example.deviantartviewer.utils.log.Logger
 import com.example.deviantartviewer.utils.network.NetworkHelper
@@ -15,7 +16,8 @@ class ImageViewModel (
         compositeDisposable: CompositeDisposable,
         networkHelper: NetworkHelper,
         authManager: AuthManager,
-        private val imageRepository: ImageRepository
+        private val imageRepository: ImageRepository,
+        private val userRepository: UserRepository
 ) : BaseViewModel(
         schedulerProvider, compositeDisposable, networkHelper, authManager
 ){
@@ -61,6 +63,18 @@ class ImageViewModel (
                                 }
                         )
         )
+    }
+
+    fun handleImageStatusChange(){
+        Logger.d(TAG, "image.isFavorite = ${image.isFavorite}, " +
+                "imageIsFavorite.value = ${imageIsFavorite.value}")
+        if(image.isFavorite != imageIsFavorite.value) markUserInfoAsOutdated()
+    }
+
+    fun markUserInfoAsOutdated(){
+        Logger.d(TAG, "Image favorite status changed from  ${image.isFavorite} " +
+                            "to ${imageIsFavorite.value}")
+        userRepository.setUserOutdated(true)
     }
 
 }

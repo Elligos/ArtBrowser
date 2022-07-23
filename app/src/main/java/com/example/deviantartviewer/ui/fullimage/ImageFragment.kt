@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.example.deviantartviewer.R
+import com.example.deviantartviewer.data.model.Image
 import com.example.deviantartviewer.databinding.FragmentImageBinding
 import com.example.deviantartviewer.di.component.FragmentComponent
 import com.example.deviantartviewer.ui.base.BaseFragment
@@ -62,7 +63,7 @@ class ImageFragment : BaseFragment<ImageViewModel>()  {
         super.setupObservers()
 
         mainSharedViewModel.selectedImage.observe(this,  {
-            viewModel.image = it
+            viewModel.image = it.copy()
             viewModel.imageIsFavorite.postValue(it.isFavorite)
 
             binding.tvTitle.text = it.name
@@ -102,6 +103,7 @@ class ImageFragment : BaseFragment<ImageViewModel>()  {
     }
 
     fun backUpToPreviousScreen(){
+        viewModel.handleImageStatusChange()
         mainSharedViewModel.backFromImageScreen.postValue(Event(true))
         findNavController().navigateUp()
     }

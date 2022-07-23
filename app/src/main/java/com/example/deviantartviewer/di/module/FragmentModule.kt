@@ -78,10 +78,11 @@ class FragmentModule(private val fragment: BaseFragment<*>) {
             compositeDisposable: CompositeDisposable,
             networkHelper: NetworkHelper,
             authManager: AuthManager,
-            imageRepository : ImageRepository
+            imageRepository : ImageRepository,
+            userRepository: UserRepository
     ): ImageViewModel = ViewModelProvider(
             fragment, ViewModelProviderFactory(ImageViewModel::class) {
-        ImageViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager, imageRepository)
+        ImageViewModel(schedulerProvider, compositeDisposable, networkHelper, authManager, imageRepository, userRepository)
     }).get(ImageViewModel::class.java)
 
 
@@ -96,7 +97,5 @@ class FragmentModule(private val fragment: BaseFragment<*>) {
         MainSharedViewModel(schedulerProvider, compositeDisposable, networkHelper,authManager)
     }).get(MainSharedViewModel::class.java)
 
-//    @Provides
-//    fun provideImageAdapter() = ImageAdapter(ArrayList(), viewModel: BrowseViewModel)
 
 }
