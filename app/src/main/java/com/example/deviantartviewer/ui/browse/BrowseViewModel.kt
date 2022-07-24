@@ -31,6 +31,7 @@ class BrowseViewModel (
     }
 
     val images = ArrayList<Image>()
+    val allResponsesResults = ArrayList<ImageResponse.Results>()
     var imagesReady : MutableLiveData<Event<Map<String, String>>> = MutableLiveData()
     var newImagesResult : MutableLiveData<Event<Map<String, String>>> = MutableLiveData()
 
@@ -66,7 +67,10 @@ class BrowseViewModel (
 
     private fun handleInitialNewImagesResponse(response: ImageResponse){
         Logger.d(TAG, "Browse fetch newest request result: $response")
-        fetchImagesFromResponse(response)
+        allResponsesResults.clear()
+        allResponsesResults.addAll(response.results)
+
+        fetchInitialImagesFromResponse(response)
         fetchedImages = FETCH_LIMIT
         newUploadedImagesAmount = 0
         fetchInProcess.postValue(false)
@@ -78,7 +82,7 @@ class BrowseViewModel (
         Logger.d(TAG, "Browse fetch newest request failed with exception: $error")
     }
 
-    private fun fetchImagesFromResponse (response: ImageResponse){
+    private fun fetchInitialImagesFromResponse (response: ImageResponse){
         images.clear()
         maxImagesToFetch = response.estimatedTotal ?: MAX_FETCH_OFFSET
 
@@ -107,8 +111,12 @@ class BrowseViewModel (
 
     private fun handleNewImagesResponse(query : String, response : ImageResponse){
         Logger.d(TAG, "Browse fetch newest request with query $query result: $response")
+        allResponsesResults.clear()
+        allResponsesResults.addAll(response.results)
+
         currentQuery = query
-        fetchImagesFromResponse(response)
+
+        fetchInitialImagesFromResponse(response)
         fetchInProcess.postValue(false)
         imagesReady.postValue(Event(emptyMap()))
         newImagesResult.postValue(Event(emptyMap()))
@@ -145,8 +153,8 @@ class BrowseViewModel (
         Logger.d(TAG, "Browse fetch newest request for more images " +
                     "with query $query result: $response")
 
-        val newImage = Converter.convertToImage(response.results[0])
-        val duplicatesAmount = findDuplicatesAmount(images, newImage)
+        val duplicatesAmount = findAmountOfDuplicatesInResponse(response.results)
+        allResponsesResults.addAll(response.results)
 
         addImagesFromResponse(response, amountToSkip = duplicatesAmount)
         newUploadedImagesAmount += duplicatesAmount
@@ -166,7 +174,10 @@ class BrowseViewModel (
 
     private fun addImagesFromResponse (response: ImageResponse, amountToSkip : Int){
         var imagesToSkip = amountToSkip
-        if(imagesToSkip >= response.results.size) return
+        if(imagesToSkip >= response.results.size){
+            Logger.d(TAG, "Amount of duplicates more than amount of data in response !")
+            return
+        }
 
         for(result in response.results){
             if(result.isMature == true) continue
@@ -181,13 +192,15 @@ class BrowseViewModel (
     }
 
 
-    private fun findDuplicatesAmount(oldData : List<Image>, newImage : Image) : Int {
+    private fun findAmountOfDuplicatesInResponse(newResponseResults : List<ImageResponse.Results>) : Int {
 
-        val amountToCheck = oldData.size
+        val amountToCheck = allResponsesResults.size
         if(amountToCheck == 0) return 0
+        val firstNewResult = newResponseResults[0]
 
         for( i in amountToCheck-1 downTo 0){
-            if(oldData[i].deviationid == newImage.deviationid) return oldData.size-i
+            if(allResponsesResults[i].deviationid == firstNewResult.deviationid)
+                return allResponsesResults.size-i
         }
 
         return 0
