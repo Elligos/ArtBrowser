@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/devArtBlack"
     android:padding="1dp">
 
 
@@ -25,7 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:contentDescription="@string/full_image_container"
-        android:background="@drawable/ic_fullimage_background_green"
+        android:padding="2dp"
+        android:background="@drawable/ic_fullimage_background_black_with_green_border"
         app:layout_constraintBottom_toTopOf="@+id/guideline20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +84,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/black"
+        android:background="@color/devArtBlack"
         android:gravity="center"
         android:maxLines="2"
         android:text="@string/title"

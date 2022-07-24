@@ -11,4 +11,6 @@
     <color name="devArtGreenTransparent">#4105CC47</color>
     <color name="devArtWhite">#F2F2F2</color>
     <color name="devArtGrey">#838592</color>
+    <color name="devArtBlack">#131314</color>
+    <color name="devArtLightBlack">#232020</color>
 </resources>

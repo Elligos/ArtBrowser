@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/devArtBlack"
     android:padding="32dp">
 
 
@@ -165,6 +165,7 @@
         android:layout_height="150dp"
         android:layout_marginBottom="20dp"
         android:contentDescription="@string/user_profile_image_description"
+        android:background="@color/devArtBlack"
         app:layout_constraintBottom_toTopOf="@+id/tvUsernameProfile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
