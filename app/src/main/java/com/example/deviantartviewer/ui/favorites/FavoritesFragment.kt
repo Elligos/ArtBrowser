@@ -60,7 +60,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
             addOnScrollListener(object : RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    onEndOfListListener(dy)
+                    onEndOfListListener()
                 }
             })
         }
@@ -93,8 +93,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
 
     }
 
-    fun onEndOfListListener(dy : Int){
-        if (dy <= 0) return
+    fun onEndOfListListener(){
         if (viewModel.fetchInProcess.value != false) return
 
         val visibleItemCount = binding.rvFavoriteImages.childCount
