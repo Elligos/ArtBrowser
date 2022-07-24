@@ -94,7 +94,11 @@ class ProfileFragment : BaseFragment<ProfileViewModel>() {
         viewModel.imageUri.observe(this, {
             val bitmap = BitmapFactory.decodeFile(it)
             if(bitmap == null) Logger.d(TAG, "Bitmap is null!")
-            binding.ivUserImage.setImageBitmap(bitmap)
+
+            else Glide.with(binding.ivUserImage.context)
+                     .load(bitmap)
+                     .apply(RequestOptions.circleCropTransform())
+                     .into(binding.ivUserImage)
 
             Logger.d(TAG, "Loading imageicon from internal storage")
         })
@@ -116,6 +120,10 @@ class ProfileFragment : BaseFragment<ProfileViewModel>() {
             it.getIfNotHandled()?.run {
                 findNavController().navigate(R.id.action_profileFragment_to_LoginFragment)
             }
+        })
+
+        viewModel.fetchInProcess.observe(this, {
+            binding.pbLoading.visibility = if(it) View.VISIBLE else View.INVISIBLE
         })
 
     }

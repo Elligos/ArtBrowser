@@ -36,6 +36,8 @@ class ProfileViewModel(
     val userInfo : MutableLiveData<User> = MutableLiveData()
     val launchLogin: MutableLiveData<Event<Map<String, String>>> = MutableLiveData()
 
+    var fetchInProcess : MutableLiveData<Boolean> = MutableLiveData()
+
 
     override fun onCreate() {
         Logger.d(TAG, "ProfileViewModel created")
@@ -53,16 +55,19 @@ class ProfileViewModel(
     }
 
     private fun updateProfileDataFromNetwork(){
+        fetchInProcess.postValue(true)
         compositeDisposable.add(
                 userRepository.doUserProfileFetch()
                         .subscribeOn(schedulerProvider.io())
                         .subscribe(
                                 {
                                     Logger.d(TAG, "Profile request result: $it")
+                                    fetchInProcess.postValue(false)
                                     userRepository.setUserOutdated(false)
                                     updateProfileWithResponseData(it)
                                 },
                                 {
+                                    fetchInProcess.postValue(false)
                                     Logger.d(TAG, "Profile request failed with exception: $it")
                                 }
                         )
