@@ -14,10 +14,8 @@ object Networking {
 
 
     private const val NETWORK_CALL_TIMEOUT = 60
- //   internal lateinit var API_KEY: String
 
-    fun create(/*apiKey: String, */baseUrl: String, cacheDir: File, cacheSize: Long): NetworkService {
- //       API_KEY = apiKey
+    fun create(baseUrl: String, cacheDir: File, cacheSize: Long): NetworkService {
         return Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(

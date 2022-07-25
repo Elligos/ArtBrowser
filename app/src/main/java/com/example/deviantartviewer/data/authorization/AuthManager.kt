@@ -3,6 +3,7 @@ package com.example.deviantartviewer.data.authorization
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import com.example.deviantartviewer.BuildConfig
 import com.example.deviantartviewer.data.remote.Endpoints
 import com.example.deviantartviewer.utils.log.Logger
 import io.reactivex.subjects.BehaviorSubject
@@ -17,8 +18,8 @@ class AuthManager constructor(private val context: Context){
 
     val authCompleteSubject = BehaviorSubject.createDefault(false)
 
-    val clientId = "18500"
-    val clientSecret = "20472a4501820a07035555938d28d607"
+    private val clientId = BuildConfig.API_KEY
+    private val clientSecret = BuildConfig.API_SECRET
 
     companion object {
         private const val TAG = "AuthManager"
