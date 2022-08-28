@@ -63,6 +63,9 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>()   {
                     onEndOfListListener()
                 }
             })
+
+            //Image elements size is always fixed, so we can enable this option for the optimization
+            setHasFixedSize(true)
         }
     }
 

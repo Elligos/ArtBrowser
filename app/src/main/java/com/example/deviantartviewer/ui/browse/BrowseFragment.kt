@@ -65,6 +65,9 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
                     onEndOfListListener(dy)
                 }
             })
+
+            //Image elements size is always fixed, so we can enable this option for the optimization
+            setHasFixedSize(true)
         }
 
         binding.svBrowseImages.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
