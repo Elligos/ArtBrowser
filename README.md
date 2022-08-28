@@ -1,6 +1,6 @@
 # ArtBrowser
 
-**ArtBrowser** application was made by me to study current technologies and approaches in Android mobile development. 
+**ArtBrowser** application is designed to explore the possibilities of current technologies in Android mobile development. 
 The application was made as part of self-education process and has no commercial purpose.
 ## About the App
 The application uses DeviantArt API and allows the user to check for the latest images uploaded to the website. 
