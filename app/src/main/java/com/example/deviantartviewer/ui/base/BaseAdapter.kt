@@ -3,7 +3,6 @@ package com.example.deviantartviewer.ui.base
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.deviantartviewer.ui.browse.images.ImageDiffUtils
 
 abstract class BaseAdapter<T : Any, VH : BaseItemViewHolder<T, BaseViewModel>>(
         val viewModel: BaseViewModel,

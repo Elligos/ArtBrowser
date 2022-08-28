@@ -1,4 +1,4 @@
-package com.example.deviantartviewer.ui.browse.images
+package com.example.deviantartviewer.ui.images
 
 import android.view.View
 import android.view.ViewGroup

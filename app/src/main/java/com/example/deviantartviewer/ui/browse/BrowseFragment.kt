@@ -1,10 +1,6 @@
 package com.example.deviantartviewer.ui.browse
 
-import android.content.Context
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,8 +9,8 @@ import com.example.deviantartviewer.R
 import com.example.deviantartviewer.databinding.FragmentBrowseBinding
 import com.example.deviantartviewer.di.component.FragmentComponent
 import com.example.deviantartviewer.ui.base.BaseFragment
-import com.example.deviantartviewer.ui.browse.images.ImageAdapter
-import com.example.deviantartviewer.ui.browse.images.ImageDiffUtils
+import com.example.deviantartviewer.ui.images.ImageAdapter
+import com.example.deviantartviewer.ui.images.ImageDiffUtils
 import com.example.deviantartviewer.ui.main.MainSharedViewModel
 import com.example.deviantartviewer.utils.log.Logger
 import javax.inject.Inject
@@ -23,7 +19,7 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
 
     companion object {
         private const val TAG = "BrowseFragment"
-        private const val SPAN_COUNT =2
+        private const val SPAN_COUNT = 2
     }
 
     //View Binding
@@ -33,9 +29,6 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
     lateinit var imageAdapter: ImageAdapter
     var gridLayoutManager = GridLayoutManager(this.context, SPAN_COUNT)
     var diffUtilsCallback = ImageDiffUtils()
-
-
-
 
     @Inject
     lateinit var mainSharedViewModel: MainSharedViewModel
@@ -136,7 +129,6 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
                 .findFirstVisibleItemPosition()
 
         if ((visibleItemCount + firstVisibleItem) >= totalItemCount) {
-//            viewModel.nextImagesFetchInProcess = true
             viewModel.loadMoreImages(viewModel.currentQuery)
         }
 
@@ -145,68 +137,6 @@ class BrowseFragment : BaseFragment<BrowseViewModel>()  {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        outState.putParcelable("layout_key", gridLayoutManager.onSaveInstanceState())
-//    }
-
-    override fun onAttach(context: Context) {
-        Logger.d(TAG, "BrowseFragment: onAttach()")
-        super.onAttach(context)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        Logger.d(TAG, "BrowseFragment: onCreate()")
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Logger.d(TAG, "BrowseFragment: onCreateView()")
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
-    override fun onStart() {
-        Logger.d(TAG, "BrowseFragment: onStart()")
-        super.onStart()
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        Logger.d(TAG, "BrowseFragment: onViewStateRestored()")
-        super.onViewStateRestored(savedInstanceState)
-    }
-
-
-    override fun onResume() {
-        Logger.d(TAG, "BrowseFragment: onResume() /n " +
-                "selectedItemPosition = $viewModel.selectedItemPosition")
-        super.onResume()
-    }
-
-    override fun onPause() {
-        Logger.d(TAG, "BrowseFragment: onPause()")
-        super.onPause()
-    }
-
-    override fun onStop() {
-        Logger.d(TAG, "BrowseFragment: onStop()")
-        super.onStop()
-    }
-
-//    override fun onDestroyView() {
-//        Logger.d(TAG, "BrowseFragment: onDestroyView()")
-//        super.onDestroyView()
-//    }
-
-    override fun onDestroy() {
-        Logger.d(TAG, "BrowseFragment: onDestroy()")
-        super.onDestroy()
-    }
-
-    override fun onDetach() {
-        Logger.d(TAG, "BrowseFragment: onDetach()")
-        super.onDetach()
     }
 
 }

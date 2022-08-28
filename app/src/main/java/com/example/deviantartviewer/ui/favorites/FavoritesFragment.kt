@@ -9,8 +9,8 @@ import com.example.deviantartviewer.R
 import com.example.deviantartviewer.databinding.FragmentFavoritesBinding
 import com.example.deviantartviewer.di.component.FragmentComponent
 import com.example.deviantartviewer.ui.base.BaseFragment
-import com.example.deviantartviewer.ui.browse.images.ImageAdapter
-import com.example.deviantartviewer.ui.browse.images.ImageDiffUtils
+import com.example.deviantartviewer.ui.images.ImageAdapter
+import com.example.deviantartviewer.ui.images.ImageDiffUtils
 import com.example.deviantartviewer.ui.main.MainSharedViewModel
 import com.example.deviantartviewer.utils.log.Logger
 import javax.inject.Inject

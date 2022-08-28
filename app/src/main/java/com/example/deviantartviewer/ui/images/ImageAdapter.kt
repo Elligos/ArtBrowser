@@ -1,12 +1,9 @@
-package com.example.deviantartviewer.ui.browse.images
+package com.example.deviantartviewer.ui.images
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.example.deviantartviewer.data.model.Image
 import com.example.deviantartviewer.ui.base.BaseAdapter
 import com.example.deviantartviewer.ui.base.BaseViewModel
-import com.example.deviantartviewer.ui.browse.BrowseViewModel
-import javax.inject.Inject
 
 
 class ImageAdapter (

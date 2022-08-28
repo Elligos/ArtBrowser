@@ -1,4 +1,4 @@
-package com.example.deviantartviewer.ui.browse.images
+package com.example.deviantartviewer.ui.images
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.deviantartviewer.data.model.Image

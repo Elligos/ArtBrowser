@@ -17,11 +17,10 @@ abstract class BaseItemViewHolder<T : Any, VM: BaseViewModel>( @LayoutRes layout
 
 
     open fun bind(data: T) {
-        //viewModel.updateData(data)
+
     }
 
     protected fun onCreate() {
- //       injectDependencies(buildViewHolderComponent())
         setupObservers()
         setupView(itemView)
     }
