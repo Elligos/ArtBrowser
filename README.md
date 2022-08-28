@@ -1,11 +1,13 @@
 # ArtBrowser
 
-I made this **ArtBrowser** application to study current technologies and approaches in Android mobile development. 
-The application was made as part of self-education process and has no commercial purposes.
+**ArtBrowser** application was made by me to study current technologies and approaches in Android mobile development. 
+The application was made as part of self-education process and has no commercial purpose.
 ## About the App
-The application interacts with the DeviantArt website and allows the user to view the latest images uploaded to the site. 
-It allows user to scale images and add/remove them to/from favorites list. 
-The application also displays user information and statistics in a separate window.
+The application uses DeviantArt API and allows the user to check for the latest images uploaded to the website. 
+It allows the user to select the image and view it in a separate window.
+The image can be zoomed, added to the user favorites list or removed from it.
+The favorites window shows which images are already in the list.
+The profile window displays user info and statistics.
 ## Built by
 * Kotlin
 * MVVM
