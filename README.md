@@ -21,6 +21,69 @@ The profile window displays user info and statistics.
 * TSnackBar
 * PhotoView
 
+## Screenshots
+
+### Authorization
+![Screenshot_1659198875](https://user-images.githubusercontent.com/22412695/187079136-b680b3cb-b77f-4839-9637-c32ecbc5122c.png)
+![Screenshot_1659200950](https://user-images.githubusercontent.com/22412695/187079159-bc4ee9c4-8dab-4432-ab35-419487110ac4.png)
+![Screenshot_1659200976](https://user-images.githubusercontent.com/22412695/187079165-8e48ca70-31ce-45a7-8613-adc001d81f29.png)
+![Screenshot_1659201021](https://user-images.githubusercontent.com/22412695/187079172-50f84660-79f8-424f-b949-b264eca25427.png)
+
+### Profile
+![Screenshot_1659198901](https://user-images.githubusercontent.com/22412695/187079265-654fb4bd-3b7a-4984-9fb5-b716c1ceb803.png)
+
+### Favorites
+![Screenshot_1659199141](https://user-images.githubusercontent.com/22412695/187079378-473bfc9c-3ffd-452c-a425-ccdc555c4613.png)
+![Screenshot_1659199155](https://user-images.githubusercontent.com/22412695/187079382-04595c27-19a9-4743-8dca-8494340b349e.png)
+
+### Zoom
+![Screenshot_1659199170](https://user-images.githubusercontent.com/22412695/187079393-516c3e64-ea2c-451c-aa61-70e3c8d48c30.png)
+![Screenshot_1659199192](https://user-images.githubusercontent.com/22412695/187079399-3b5e21be-48cd-4f14-8517-a000f6a04133.png)
+
+### Browse
+![Screenshot_1659198925](https://user-images.githubusercontent.com/22412695/187079815-c105d449-03a5-4889-a038-757ddd5e83ee.png)
+![Screenshot_1659198987](https://user-images.githubusercontent.com/22412695/187079817-d2fd2e23-3000-4025-8eed-679db7f56707.png)
+![Screenshot_1659199104](https://user-images.githubusercontent.com/22412695/187079820-b92f9a64-1acc-42c6-82fd-c34a7764bf99.png)
+
+### Add to favorites
+Statistic before
+![Screenshot_1659198901](https://user-images.githubusercontent.com/22412695/187079876-0c79d478-e876-4c47-9813-3db2631f3f88.png)
+
+Favorites list before
+![Screenshot_1659199141](https://user-images.githubusercontent.com/22412695/187079913-4b0007d6-1e0f-4610-8d8b-2ead028feab0.png)
+
+Select and add image to the favorites
+![Screenshot_1659201983](https://user-images.githubusercontent.com/22412695/187079971-b2d6f5f2-b777-45f5-9f10-ea2f4b8b5d7d.png)
+![Screenshot_1659201992](https://user-images.githubusercontent.com/22412695/187079978-04364422-c4c4-43e6-b1ff-654efbc76c79.png)
+![Screenshot_1659202008](https://user-images.githubusercontent.com/22412695/187079984-70c83c7a-8564-487f-98c7-50ea9e5d6d06.png)
+
+Favorites list after
+![Screenshot_1659202032](https://user-images.githubusercontent.com/22412695/187080015-16e0949c-12ca-4bb4-986f-84ce62304917.png)
+
+Statistic after
+![Screenshot_1659202967](https://user-images.githubusercontent.com/22412695/187080049-5bdf9a6d-98d7-45e0-b6c3-4531da6a550e.png)
+
+### Remove from favorites
+![Screenshot_1659200445](https://user-images.githubusercontent.com/22412695/187080116-a82dfa90-913a-44a2-ad5e-32dcf7a7f45e.png)
+![Screenshot_1659200453](https://user-images.githubusercontent.com/22412695/187080120-c40cde68-ea50-40a1-94f7-057305fee08a.png)
+![Screenshot_1659200461](https://user-images.githubusercontent.com/22412695/187080123-07653723-b4b6-4d49-93a3-f5c1af4a7e3e.png)
+![Screenshot_1659200472](https://user-images.githubusercontent.com/22412695/187080129-a88b4758-9a60-4455-8076-7c4909583e9d.png)
+
+### Loading
+![Screenshot_1659199423](https://user-images.githubusercontent.com/22412695/187080145-296ac6d4-7156-4ad2-b50d-175d4f9ab64c.png)
+![Screenshot_1659199489](https://user-images.githubusercontent.com/22412695/187080148-e0e566a1-d29e-40b9-a204-2430664fafb8.png)
+
+### No connection error
+![Screenshot_1659198724](https://user-images.githubusercontent.com/22412695/187080208-6be36672-50c2-4a94-a21e-436494def6fe.png)
+![Screenshot_1659199702](https://user-images.githubusercontent.com/22412695/187080212-830e6735-f2b4-4b43-841a-2ed311e5e3bd.png)
+![Screenshot_1659199756](https://user-images.githubusercontent.com/22412695/187080220-f6e7c7a5-338f-411a-b6a8-37f8f616ca25.png)
+![Screenshot_1659199775](https://user-images.githubusercontent.com/22412695/187080225-fe588d20-3d2d-45c2-b266-50a84c264072.png)
+![Screenshot_1659201133](https://user-images.githubusercontent.com/22412695/187080230-4dcaf1f4-cfde-4ca2-9c45-9bcfa1b7eb0f.png)
+![Screenshot_1659201186](https://user-images.githubusercontent.com/22412695/187080234-61ca21ea-05ae-4c77-a994-bccb04cc2c2d.png)
+
+### Navigation graph
+![navigation_graph](https://user-images.githubusercontent.com/22412695/187080267-1ce6be15-05c1-4c9b-b400-9d60e34b42c6.png)
+
 
 ## Project Structure
 
